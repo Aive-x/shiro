@@ -43,6 +43,7 @@ public class JwtFilter extends AuthenticatingFilter {
         if(jwtToken.getJwt() == null){
             return null;
         }
+        log.info("token:{}", jwtToken.getJwt());
         return jwtToken;
     }
 
