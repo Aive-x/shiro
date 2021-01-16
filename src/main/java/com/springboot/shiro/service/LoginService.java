@@ -6,6 +6,6 @@ package com.springboot.shiro.service;
  */
 public interface LoginService {
 
-    String doLogin(String username, String password);
+    String doLogin(String username, String password) throws Exception;
 
 }

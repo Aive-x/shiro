@@ -26,7 +26,7 @@ public class JwtFilter extends AuthenticatingFilter {
         if (isLoginRequest(request, response)) {
             return true;
         }
-        Boolean allowed = false;
+        boolean allowed = false;
         try {
             allowed = executeLogin(request, response);
         } catch (Exception e) {

@@ -2,6 +2,8 @@ package com.springboot.shiro.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springboot.shiro.auth.JwtUtil;
+import com.springboot.shiro.common.ErrorCodeMessage;
+import com.springboot.shiro.common.MarsRuntimeException;
 import com.springboot.shiro.dao.bean.Response;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.LoginService;
@@ -13,6 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,16 +30,19 @@ public class LoginServiceImpl implements LoginService {
     private JwtUtil jwtUtil;
 
     @Override
-    public String doLogin(String username, String password) {
+    public String doLogin(String username, String password) throws Exception{
 
         Subject subject = SecurityUtils.getSubject();
-
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
-        subject.login(usernamePasswordToken);
+        try{
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
+            subject.login(usernamePasswordToken);
+        } catch (Exception exception){
+            throw new MarsRuntimeException(ErrorCodeMessage.LOGIN_FAIL);
+        }
 
         User user = (User) subject.getPrincipal();
         String token = jwtUtil.generateToken(JSONObject.parseObject(JSONObject.toJSONString(user)));
-
+        System.out.println("登录成功， token： " + token);
         return token;
     }
 

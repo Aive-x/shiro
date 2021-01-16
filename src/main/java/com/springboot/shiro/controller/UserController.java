@@ -1,8 +1,10 @@
 package com.springboot.shiro.controller;
 
+import com.springboot.shiro.common.ActionReturnUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
     @ResponseBody
-    @RequestMapping("/show")
-    public String showUser() {
+    @RequestMapping( method = RequestMethod.GET)
+    public ActionReturnUtil showUser() {
         System.out.println("123");
-        return "这是学生信息";
+        return ActionReturnUtil.returnSuccessWithData("success");
     }
 
 }

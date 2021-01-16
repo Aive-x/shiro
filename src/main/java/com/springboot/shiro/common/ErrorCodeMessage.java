@@ -1,0 +1,51 @@
+package com.springboot.shiro.common;
+
+/**
+ * @author xutianhong
+ * @Date 2021/1/9 3:29 下午
+ */
+public enum ErrorCodeMessage {
+
+    LOGIN_FAIL(10001, "登录失败"),
+    UNKNOWN(100002,  "系统错误，请联系系统管理员");
+
+    private final int value;
+    private final String reasonChPhrase;
+
+    ErrorCodeMessage(int value, String reasonChPhrase) {
+        this.value = value;
+        this.reasonChPhrase = reasonChPhrase;
+    }
+
+    public int value() {
+        return this.value;
+    }
+
+    public String getReasonChPhrase() {
+        return reasonChPhrase;
+    }
+
+    public static ErrorCodeMessage valueOf(int statusCode) {
+        ErrorCodeMessage[] var1 = values();
+        int var2 = var1.length;
+
+        for(int var3 = 0; var3 < var2; ++var3) {
+            ErrorCodeMessage status = var1[var3];
+            if (status.value == statusCode) {
+                return status;
+            }
+        }
+
+        throw new IllegalArgumentException("No matching constant for [" + statusCode + "]");
+    }
+
+    public static String getMessageWithLanguage(ErrorCodeMessage error, String extendMessage, boolean prefix){
+        String message;
+        if (prefix) {
+            message = extendMessage + error.getReasonChPhrase();
+        } else {
+            message = error.getReasonChPhrase() + extendMessage;
+        }
+        return message;
+    }
+}

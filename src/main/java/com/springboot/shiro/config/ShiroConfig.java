@@ -1,6 +1,7 @@
 package com.springboot.shiro.config;
 
 import com.springboot.shiro.filter.JwtFilter;
+import com.springboot.shiro.filter.SimpleCORSFilter;
 import com.springboot.shiro.filter.UserRolesAuthorizationFilter;
 import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.pam.FirstSuccessfulStrategy;
@@ -35,6 +36,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
         Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("simpleCORSFilter", simpleCORSFilter());
         filterMap.put("jwtFilter", jwtFilter());
         filterMap.put("userRolesAuthorizationFilter", userRolesAuthorizationFilter());
         shiroFilterFactoryBean.setFilters(filterMap);
@@ -46,7 +48,7 @@ public class ShiroConfig {
     @Bean
     protected ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
-        chainDefinition.addPathDefinition("/**", "noSessionCreation,jwtFilter ,userRolesAuthorizationFilter");
+        chainDefinition.addPathDefinition("/**", "noSessionCreation, simpleCORSFilter, jwtFilter, userRolesAuthorizationFilter");
         return chainDefinition;
     }
 
@@ -68,7 +70,7 @@ public class ShiroConfig {
      * 需要注意的是，如果用户代码里调用Subject.getSession()还是可以用session，如果要完全禁用，要配合下面的noSessionCreation的Filter来实现
      */
     @Bean
-    protected SessionStorageEvaluator sessionStorageEvaluator(){
+    protected SessionStorageEvaluator sessionStorageEvaluator() {
         DefaultWebSessionStorageEvaluator sessionStorageEvaluator = new DefaultWebSessionStorageEvaluator();
         sessionStorageEvaluator.setSessionStorageEnabled(false);
         return sessionStorageEvaluator;
@@ -84,22 +86,27 @@ public class ShiroConfig {
     }
 
     @Bean
-    public JwtFilter jwtFilter(){
+    public SimpleCORSFilter simpleCORSFilter() {
+        return new SimpleCORSFilter();
+    }
+
+    @Bean
+    public JwtFilter jwtFilter() {
         return new JwtFilter();
     }
 
     @Bean
-    public UserRolesAuthorizationFilter userRolesAuthorizationFilter(){
+    public UserRolesAuthorizationFilter userRolesAuthorizationFilter() {
         return new UserRolesAuthorizationFilter();
     }
 
     @Bean
-    public JwtRealm jwtRealm(){
+    public JwtRealm jwtRealm() {
         return new JwtRealm();
     }
 
     @Bean
-    public LoginRealm loginRealm(){
+    public LoginRealm loginRealm() {
         return new LoginRealm();
     }
 
