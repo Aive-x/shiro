@@ -57,6 +57,7 @@ public class ShiroConfig {
      */
     @Bean
     public Authenticator authenticator() {
+
         ModularRealmAuthenticator authenticator = new ModularRealmAuthenticator();
         //设置两个Realm，一个用于用户登录验证和访问权限获取；一个用于jwt token的认证
         authenticator.setRealms(Arrays.asList(jwtRealm(), loginRealm()));
