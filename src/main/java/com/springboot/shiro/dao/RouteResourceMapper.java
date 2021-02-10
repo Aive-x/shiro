@@ -15,5 +15,4 @@ public interface RouteResourceMapper {
     List<RouteResource> listRouteResource();
 
     RouteResource getRoleByPath(String path);
-
 }

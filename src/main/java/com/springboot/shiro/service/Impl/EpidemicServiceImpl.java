@@ -51,6 +51,7 @@ public class EpidemicServiceImpl implements EpidemicService {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
         String currentDiagnosed = "较上日" + epidemicInformation.getCurrentDiagnosedIncr() + "\n"
             + epidemicInformation.getCurrentDiagnosed() + "\n现有确诊";
+
         String diagnosed =
             "较上日" + epidemicInformation.getDiagnosedIncr() + "\n" + epidemicInformation.getDiagnosed() + "\n现有确诊";
         String serious =
