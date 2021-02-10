@@ -37,6 +37,7 @@ public class EpidemicServiceImpl implements EpidemicService {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
         List<AreaEpidemic> areaEpidemicList = new ArrayList<>();
         epidemicInformation.getArea().forEach(area -> {
+
             AreaEpidemic areaEpidemic = new AreaEpidemic();
             areaEpidemic.setArea(area.getProvinceName());
             areaEpidemic.setCurrentConfirmedCount(area.getCurrentConfirmedCount());
