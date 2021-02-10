@@ -2,6 +2,7 @@ package com.springboot.shiro.util;
 
 import com.springboot.shiro.common.ErrorCodeMessage;
 import com.springboot.shiro.common.MarsRuntimeException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
  * @author xutianhong
  * @Date 2021/1/16 4:28 下午
  */
+@Slf4j
 public class HttpClientUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class);
@@ -39,8 +41,7 @@ public class HttpClientUtil {
 
         URIBuilder ub = new URIBuilder();
         ub.setScheme("http");
-        ub.setHost("tianqiapi.com");
-        ub.setPath("api");
+        ub.setHost(url);
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         CloseableHttpResponse response = null;
         if (params != null) {

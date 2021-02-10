@@ -1,7 +1,6 @@
 package com.springboot.shiro.controller;
 
-import com.springboot.shiro.common.ActionReturnUtil;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.springboot.shiro.util.ActionReturnUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

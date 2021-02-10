@@ -1,23 +1,16 @@
 package com.springboot.shiro.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.springboot.shiro.auth.JwtUtil;
+import com.springboot.shiro.util.JwtUtil;
 import com.springboot.shiro.common.ErrorCodeMessage;
 import com.springboot.shiro.common.MarsRuntimeException;
-import com.springboot.shiro.dao.bean.Response;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.LoginService;
-import com.springboot.shiro.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author xutianhong

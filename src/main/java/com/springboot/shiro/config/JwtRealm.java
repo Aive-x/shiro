@@ -1,6 +1,6 @@
 package com.springboot.shiro.config;
 
-import com.springboot.shiro.auth.JwtUtil;
+import com.springboot.shiro.util.JwtUtil;
 import com.springboot.shiro.dao.bean.JwtToken;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.UserService;
@@ -11,9 +11,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author xutianhong

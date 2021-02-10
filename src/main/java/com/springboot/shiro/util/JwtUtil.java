@@ -1,4 +1,4 @@
-package com.springboot.shiro.auth;
+package com.springboot.shiro.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

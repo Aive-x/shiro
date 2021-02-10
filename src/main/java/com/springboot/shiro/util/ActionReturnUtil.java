@@ -1,6 +1,7 @@
-package com.springboot.shiro.common;
+package com.springboot.shiro.util;
 
-import org.apache.commons.lang3.StringUtils;
+import com.springboot.shiro.common.ErrorCodeMessage;
+import com.springboot.shiro.common.MarsRuntimeException;
 
 import java.util.HashMap;
 
@@ -140,7 +141,7 @@ public class ActionReturnUtil extends HashMap<String, Object> {
         return returnMap;
     }
 
-    public static ActionReturnUtil returnErrorWithMsg(ErrorCodeMessage error) throws MarsRuntimeException{
+    public static ActionReturnUtil returnErrorWithMsg(ErrorCodeMessage error) throws MarsRuntimeException {
         return returnErrorWithMsg(error, "", false);
     }
 
