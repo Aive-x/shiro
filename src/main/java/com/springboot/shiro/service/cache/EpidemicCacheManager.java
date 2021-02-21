@@ -41,11 +41,7 @@ public class EpidemicCacheManager {
     }
 
     public EpidemicInformation getEpidemicInformation() throws Exception{
-        Map<String, Object> params = new HashMap<>(3);
-        params.put("version", "epidemic");
-        params.put("appid", "23035354");
-        params.put("appsecret", "8YvlPNrz");
-        Map<String, Object> result = HttpClientUtil.httpGetClient("tianqiapi.com/api", null, params);
+        Map<String, Object> result = HttpClientUtil.httpGetClient("c.m.163.com/ug/api/wuhan/app/data/list-total", null, null);
         return JsonUtil.jsonToPojo(
                 JsonUtil.convertToJson(JsonUtil.convertJsonToMap(result.get("body").toString()).get("data")),
                 EpidemicInformation.class);

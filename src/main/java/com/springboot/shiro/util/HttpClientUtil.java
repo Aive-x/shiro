@@ -40,7 +40,7 @@ public class HttpClientUtil {
             throws Exception {
 
         URIBuilder ub = new URIBuilder();
-        ub.setScheme("http");
+        ub.setScheme("https");
         ub.setHost(url);
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         CloseableHttpResponse response = null;

@@ -36,22 +36,23 @@ public class EpidemicServiceImpl implements EpidemicService {
     public List<AreaEpidemic> getAreaEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
         List<AreaEpidemic> areaEpidemicList = new ArrayList<>();
-        epidemicInformation.getArea().forEach(area -> {
+        // todo 遍历区域信息并写入
+        /*epidemicInformation.getArea().forEach(area -> {
             AreaEpidemic areaEpidemic = new AreaEpidemic();
             areaEpidemic.setArea(area.getProvinceName());
             areaEpidemic.setCurrentConfirmedCount(area.getCurrentConfirmedCount());
             areaEpidemic.setConfirmedCount(area.getConfirmedCount());
             areaEpidemicList.add(areaEpidemic);
-        });
+        });*/
         return areaEpidemicList;
     }
 
     @Override
     public List<String> getBoardEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
-        String currentDiagnosed = "较上日" + epidemicInformation.getCurrentDiagnosedIncr() + "\n"
+        /*String currentDiagnosed = "较上日" + epidemicInformation.getCurrentDiagnosedIncr() + "\n"
             + epidemicInformation.getCurrentDiagnosed() + "\n现有确诊";
-
+        
         String diagnosed =
             "较上日" + epidemicInformation.getDiagnosedIncr() + "\n" + epidemicInformation.getDiagnosed() + "\n现有确诊";
         String serious =
@@ -59,14 +60,14 @@ public class EpidemicServiceImpl implements EpidemicService {
         String suspect =
             "较上日" + epidemicInformation.getSuspectIncr() + "\n" + epidemicInformation.getSuspect() + "\n现有确诊";
         String cured = "较上日" + epidemicInformation.getCuredIncr() + "\n" + epidemicInformation.getCured() + "\n现有确诊";
-        String death = "较上日" + epidemicInformation.getDeathIncr() + "\n" + epidemicInformation.getDeath() + "\n现有确诊";
+        String death = "较上日" + epidemicInformation.getDeathIncr() + "\n" + epidemicInformation.getDeath() + "\n现有确诊";*/
         List<String> boardEpidemicInformation = new ArrayList<>();
-        boardEpidemicInformation.add(currentDiagnosed);
+        /*boardEpidemicInformation.add(currentDiagnosed);
         boardEpidemicInformation.add(diagnosed);
         boardEpidemicInformation.add(serious);
         boardEpidemicInformation.add(suspect);
         boardEpidemicInformation.add(cured);
-        boardEpidemicInformation.add(death);
+        boardEpidemicInformation.add(death);*/
         return boardEpidemicInformation;
     }
 }
