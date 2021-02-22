@@ -3,6 +3,7 @@ package com.springboot.shiro.service.Impl;
 import com.springboot.shiro.dto.AreaEpidemic;
 import com.springboot.shiro.service.EpidemicService;
 import com.springboot.shiro.service.bean.Area;
+import com.springboot.shiro.service.bean.AreaTree;
 import com.springboot.shiro.service.bean.EpidemicInformation;
 import com.springboot.shiro.util.HttpClientUtil;
 import com.springboot.shiro.util.JsonUtil;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xutianhong
@@ -35,15 +37,15 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public List<AreaEpidemic> getAreaEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
+        AreaTree areaTree = epidemicInformation.getAreaTree().stream().collect(Collectors.toMap(AreaTree::getName, areaTree1 -> areaTree1)).get("中国");
         List<AreaEpidemic> areaEpidemicList = new ArrayList<>();
-        // todo 遍历区域信息并写入
-        /*epidemicInformation.getArea().forEach(area -> {
+        areaTree.getChildren().forEach(area -> {
             AreaEpidemic areaEpidemic = new AreaEpidemic();
-            areaEpidemic.setArea(area.getProvinceName());
-            areaEpidemic.setCurrentConfirmedCount(area.getCurrentConfirmedCount());
-            areaEpidemic.setConfirmedCount(area.getConfirmedCount());
+            areaEpidemic.setArea(area.getName());
+            areaEpidemic.setCurrentConfirmedCount(area.getToday().getConfirm());
+            areaEpidemic.setConfirmedCount(area.getTotal().getConfirm());
             areaEpidemicList.add(areaEpidemic);
-        });*/
+        });
         return areaEpidemicList;
     }
 
