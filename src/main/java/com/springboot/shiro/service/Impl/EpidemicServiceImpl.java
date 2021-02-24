@@ -2,9 +2,7 @@ package com.springboot.shiro.service.Impl;
 
 import com.springboot.shiro.dto.AreaEpidemic;
 import com.springboot.shiro.service.EpidemicService;
-import com.springboot.shiro.service.bean.Area;
-import com.springboot.shiro.service.bean.AreaTree;
-import com.springboot.shiro.service.bean.EpidemicInformation;
+import com.springboot.shiro.service.bean.*;
 import com.springboot.shiro.util.HttpClientUtil;
 import com.springboot.shiro.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,24 +50,43 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public List<String> getBoardEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
-        /*String currentDiagnosed = "较上日" + epidemicInformation.getCurrentDiagnosedIncr() + "\n"
-            + epidemicInformation.getCurrentDiagnosed() + "\n现有确诊";
-        
-        String diagnosed =
-            "较上日" + epidemicInformation.getDiagnosedIncr() + "\n" + epidemicInformation.getDiagnosed() + "\n现有确诊";
-        String serious =
-            "较上日" + epidemicInformation.getSeriousIncr() + "\n" + epidemicInformation.getSerious() + "\n现有确诊";
-        String suspect =
-            "较上日" + epidemicInformation.getSuspectIncr() + "\n" + epidemicInformation.getSuspect() + "\n现有确诊";
-        String cured = "较上日" + epidemicInformation.getCuredIncr() + "\n" + epidemicInformation.getCured() + "\n现有确诊";
-        String death = "较上日" + epidemicInformation.getDeathIncr() + "\n" + epidemicInformation.getDeath() + "\n现有确诊";*/
+        ChinaTotal chinaTotal = epidemicInformation.getChinaTotal();
+        Total total = chinaTotal.getTotal();
+        Today today = chinaTotal.getToday();
+
+        String currentDiagnosed;
+        String suspect;
+        String newdeth;
+
+        if (today.getConfirm() == null) {
+            currentDiagnosed = "新增确诊:" + "0";
+        } else {
+            currentDiagnosed = "新增确诊:" + today.getConfirm();
+        }
+        if (today.getSuspect() == null) {
+            suspect = "新增疑似:" + "0";
+        } else {
+            suspect = "新增疑似:" + today.getSuspect();
+        }
+        if (today.getDead() == null) {
+            newdeth = "新增死亡:" + "0";
+        } else {
+            newdeth = "新增死亡:" + today.getDead();
+        }
+
+        String diagnosed = "累计确诊:" + total.getConfirm();
+        String input = "境外输入:" + total.getInput();
+        String cured = "累计治愈:" + total.getHeal();
+        String death = "累计死亡:" + total.getDead();
+
         List<String> boardEpidemicInformation = new ArrayList<>();
-        /*boardEpidemicInformation.add(currentDiagnosed);
+        boardEpidemicInformation.add(currentDiagnosed);
         boardEpidemicInformation.add(diagnosed);
-        boardEpidemicInformation.add(serious);
         boardEpidemicInformation.add(suspect);
+        boardEpidemicInformation.add(newdeth);
+        boardEpidemicInformation.add(input);
         boardEpidemicInformation.add(cured);
-        boardEpidemicInformation.add(death);*/
+        boardEpidemicInformation.add(death);
         return boardEpidemicInformation;
     }
 }
