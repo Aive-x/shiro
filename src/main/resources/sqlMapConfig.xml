@@ -12,11 +12,17 @@
     <typeAliases>
         <typeAlias alias="User" type="com.springboot.shiro.dao.bean.User"/>
         <typeAlias alias="RouteResource" type="com.springboot.shiro.dao.bean.RouteResource"/>
+        <typeAlias alias="DailyReport" type="com.springboot.shiro.dao.bean.DailyReport"/>
+        <typeAlias alias="StudentEpidemicInformation" type="com.springboot.shiro.dao.bean.StudentEpidemicInformation"/>
+        <typeAlias alias="Classes" type="com.springboot.shiro.dao.bean.Classes"/>
     </typeAliases>
 
     <mappers>
         <mapper resource="com/mysql/mapping/UserMapper.xml" />
         <mapper resource="com/mysql/mapping/RouteResourceMapper.xml" />
+        <mapper resource="com/mysql/mapping/DailyReport.xml" />
+        <mapper resource="com/mysql/mapping/StudentEpidemicInformation.xml" />
+        <mapper resource="com/mysql/mapping/Classes.xml" />
     </mappers>
 
 </configuration>

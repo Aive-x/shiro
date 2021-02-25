@@ -1,10 +1,10 @@
 package com.springboot.shiro.service.Impl;
 
+import com.springboot.shiro.dao.DailyReportMapper;
+import com.springboot.shiro.dao.bean.DailyReport;
 import com.springboot.shiro.dto.AreaEpidemic;
 import com.springboot.shiro.service.EpidemicService;
-import com.springboot.shiro.service.bean.Area;
-import com.springboot.shiro.service.bean.AreaTree;
-import com.springboot.shiro.service.bean.EpidemicInformation;
+import com.springboot.shiro.service.bean.*;
 import com.springboot.shiro.util.HttpClientUtil;
 import com.springboot.shiro.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,8 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public List<AreaEpidemic> getAreaEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
-        AreaTree areaTree = epidemicInformation.getAreaTree().stream().collect(Collectors.toMap(AreaTree::getName, areaTree1 -> areaTree1)).get("中国");
+        AreaTree areaTree = epidemicInformation.getAreaTree().stream()
+            .collect(Collectors.toMap(AreaTree::getName, areaTree1 -> areaTree1)).get("中国");
         List<AreaEpidemic> areaEpidemicList = new ArrayList<>();
         areaTree.getChildren().forEach(area -> {
             AreaEpidemic areaEpidemic = new AreaEpidemic();
@@ -52,6 +53,9 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public List<String> getBoardEpidemicInformation() throws Exception {
         EpidemicInformation epidemicInformation = this.getEpidemicInformation();
+        ChinaTotal chinaTotal = epidemicInformation.getChinaTotal();
+        Total total = chinaTotal.getTotal();
+        Today today = chinaTotal.getToday();
         /*String currentDiagnosed = "较上日" + epidemicInformation.getCurrentDiagnosedIncr() + "\n"
             + epidemicInformation.getCurrentDiagnosed() + "\n现有确诊";
         

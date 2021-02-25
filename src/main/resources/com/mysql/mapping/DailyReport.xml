@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.shiro.dao.DailyReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.DailyReport">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="temperature" property="temperature" jdbcType="DOUBLE"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, student_number, temperature, position
+    </sql>
+
+    <insert id="addDailyReport">
+        insert into daily_report (student_number, temperature, position ) values (#{studentNumber}, #{temperature}, #{position})
+    </insert>
+
+    <select id="listDailyReport" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from daily_report
+    </select>
+
+
+</mapper>

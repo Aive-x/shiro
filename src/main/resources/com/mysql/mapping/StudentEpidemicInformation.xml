@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.shiro.dao.StudentEpidemicInformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.StudentEpidemicInformation">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="date" property="date"/>
+        <result column="class" property="classes" jdbcType="VARCHAR"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="person" property="person" jdbcType="VARCHAR"/>
+        <result column="place" property="place" jdbcType="VARCHAR"/>
+        <result column="others" property="others" jdbcType="VARCHAR"/>
+        <result column="tag" property="tag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, date, class, student_number, name, person, place, others, tag
+    </sql>
+
+    <select id="getStudentEpidemicInformation" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stu_epidemic_info
+    </select>
+
+    <insert id="setStudentEpidemicInformation">
+        insert into stu_epidemic_info (date, class, student_number, name, person, place, others, tag)
+        values (#{date}, #{classes}, #{studentNumber}, #{name}, #{person}, #{place}, #{others}, #{tag})
+    </insert>
+
+
+</mapper>

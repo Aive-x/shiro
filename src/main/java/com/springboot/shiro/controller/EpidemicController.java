@@ -1,13 +1,12 @@
 package com.springboot.shiro.controller;
 
+import com.springboot.shiro.dao.bean.DailyReport;
 import com.springboot.shiro.service.EpidemicService;
 import com.springboot.shiro.util.ActionReturnUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xutianhong

@@ -1,5 +1,6 @@
 package com.springboot.shiro.service;
 
+import com.springboot.shiro.dao.bean.DailyReport;
 import com.springboot.shiro.dto.AreaEpidemic;
 import com.springboot.shiro.service.bean.EpidemicInformation;
 
