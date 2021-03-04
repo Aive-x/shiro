@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.shiro.dao.TripMapper">
+
+    <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.Trip">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="date" property="date"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, student_number, position , date
+    </sql>
+
+    <insert id="setTrip">
+        insert into trip (id, student_number, position, date) values (#{studentNumber}, #{position}, #{date})
+    </insert>
+
+    <select id="listTrip" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <if test="studentNUmber != null">
+            where student_number = #{studentNUmber}
+        </if>
+    </select>
+
+</mapper>

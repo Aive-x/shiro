@@ -15,6 +15,9 @@
         <typeAlias alias="DailyReport" type="com.springboot.shiro.dao.bean.DailyReport"/>
         <typeAlias alias="StudentEpidemicInformation" type="com.springboot.shiro.dao.bean.StudentEpidemicInformation"/>
         <typeAlias alias="Classes" type="com.springboot.shiro.dao.bean.Classes"/>
+        <typeAlias alias="SystemMenu" type="com.springboot.shiro.dao.bean.SystemMenu"/>
+        <typeAlias alias="Trip" type="com.springboot.shiro.dao.bean.Trip"/>
+        <typeAlias alias="SchoolEpidemic" type="com.springboot.shiro.dao.bean.SchoolEpidemic"/>
     </typeAliases>
 
     <mappers>
@@ -23,6 +26,9 @@
         <mapper resource="com/mysql/mapping/DailyReport.xml" />
         <mapper resource="com/mysql/mapping/StudentEpidemicInformation.xml" />
         <mapper resource="com/mysql/mapping/Classes.xml" />
+        <mapper resource="com/mysql/mapping/SystemMenu.xml" />
+        <mapper resource="com/mysql/mapping/Trip.xml" />
+        <mapper resource="com/mysql/mapping/SchoolEpidemic.xml" />
     </mappers>
 
 </configuration>

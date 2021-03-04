@@ -15,4 +15,6 @@ public interface DailyReportMapper {
     void addDailyReport(DailyReport dailyReport);
 
     List<DailyReport> listDailyReport();
+
+    List<DailyReport> getDailyReportByStudentNumber(String studentNumber);
 }

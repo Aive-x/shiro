@@ -2,18 +2,16 @@ package com.springboot.shiro.dao.bean;
 
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author xutianhong
- * @Date 2021/2/24 2:19 下午
+ * @Date 2021/3/4 4:52 下午
  */
 @Data
-public class DailyReport implements Serializable {
-    private Integer id;
+public class Trip {
+    private String id;
     private String studentNumber;
-    private Double temperature;
     private String position;
     private Date date;
 }

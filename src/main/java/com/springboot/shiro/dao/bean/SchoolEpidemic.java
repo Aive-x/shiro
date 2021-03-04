@@ -6,17 +6,13 @@ import java.util.Date;
 
 /**
  * @author xutianhong
- * @Date 2021/2/25 10:59 上午
+ * @Date 2021/3/4 9:31 下午
  */
 @Data
-public class StudentEpidemicInformation {
+public class SchoolEpidemic {
     private Integer id;
     private Date date;
-    private String classes;
-    private String studentNumber;
     private String name;
-    private String person;
-    private String place;
-    private String others;
+    private String trip;
     private String tag;
 }

@@ -19,7 +19,7 @@
         id, date, class, student_number, name, person, place, others, tag
     </sql>
 
-    <select id="getStudentEpidemicInformation" resultMap="BaseResultMap">
+    <select id="listStudentEpidemicInformation" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from stu_epidemic_info
@@ -29,6 +29,12 @@
         insert into stu_epidemic_info (date, class, student_number, name, person, place, others, tag)
         values (#{date}, #{classes}, #{studentNumber}, #{name}, #{person}, #{place}, #{others}, #{tag})
     </insert>
+
+    <select id="getStudentEpidemicInformationById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stu_epidemic_info where id = #{id}
+    </select>
 
 
 </mapper>

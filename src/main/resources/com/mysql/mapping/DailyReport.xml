@@ -7,21 +7,31 @@
         <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
         <result column="temperature" property="temperature" jdbcType="DOUBLE"/>
         <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="date" property="date" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, student_number, temperature, position
+        id, student_number, temperature, position, date
     </sql>
 
     <insert id="addDailyReport">
-        insert into daily_report (student_number, temperature, position ) values (#{studentNumber}, #{temperature}, #{position})
+        insert into daily_report (student_number, temperature, position, date )
+        values (#{studentNumber}, #{temperature}, #{position}, #{date})
     </insert>
 
     <select id="listDailyReport" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from daily_report
+    </select>
+
+    <select id="getDailyReportByStudentNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from daily_report
+        where
+        student_number = #{studentNumber}
     </select>
 
 

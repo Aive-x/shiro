@@ -12,7 +12,12 @@ public class User implements java.io.Serializable{
     private Integer id;
     private String username;
     private String password;
+    private String name;
+    private String college;
+    private String classes;
+    private String dormitory;
     private String role;
+    private String phone;
 
     @Override
     public String toString(){

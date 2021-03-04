@@ -20,6 +20,6 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
 
     @Override
     public List<StudentEpidemicInformation> getStudentEpidemicInfomation() throws Exception {
-        return studentEpidemicInformationMapper.getStudentEpidemicInformation();
+        return studentEpidemicInformationMapper.listStudentEpidemicInformation();
     }
 }

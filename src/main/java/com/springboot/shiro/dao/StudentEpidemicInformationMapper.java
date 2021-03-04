@@ -11,7 +11,9 @@ import java.util.List;
  */
 @Repository
 public interface StudentEpidemicInformationMapper {
-    List<StudentEpidemicInformation> getStudentEpidemicInformation();
+    List<StudentEpidemicInformation> listStudentEpidemicInformation();
 
     void setStudentEpidemicInformation(StudentEpidemicInformation studentEpidemicInformation);
+
+    StudentEpidemicInformation getStudentEpidemicInformationById(String id);
 }

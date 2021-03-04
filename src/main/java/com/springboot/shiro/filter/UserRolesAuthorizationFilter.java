@@ -34,8 +34,11 @@ public class UserRolesAuthorizationFilter extends AuthorizationFilter {
         String path = getPathWithinApplication(servletRequest);
         List<String> listRoles = routeResourceService.getRoleByPath(path);
 
-        if(subject.hasAllRoles(listRoles)){
-            return true;
+        boolean[] booleans =  subject.hasRoles(listRoles);
+        for (int i = 0; i < booleans.length; ++i){
+            if (booleans[i]){
+                return true;
+            }
         }
 
         /*String[] rolesArray = (String[]) mappedValue;
