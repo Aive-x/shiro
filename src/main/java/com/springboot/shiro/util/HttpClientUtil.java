@@ -40,7 +40,7 @@ public class HttpClientUtil {
             throws Exception {
 
         URIBuilder ub = new URIBuilder();
-        ub.setScheme("https");
+        ub.setScheme("http");
         ub.setHost(url);
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         CloseableHttpResponse response = null;
@@ -158,7 +158,8 @@ public class HttpClientUtil {
     public static Map<String, Object> httpPostClient(String url, Map<String, Object> headers,
                                                      Map<String, Object> params, String json) throws Exception {
         URIBuilder ub = new URIBuilder();
-        ub.setPath(url);
+        ub.setScheme("http");
+        ub.setHost(url);
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         try {
             // 设置请求和传输超时时间

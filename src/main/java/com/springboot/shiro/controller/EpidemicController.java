@@ -21,6 +21,12 @@ public class EpidemicController {
     private EpidemicService epidemicService;
 
     @ResponseBody
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ActionReturnUtil getEpidemicInformation() throws Exception {
+        return ActionReturnUtil.returnSuccessWithData(epidemicService.getEpidemicInformation());
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/area", method = RequestMethod.GET)
     public ActionReturnUtil getAreaEpidemicInformation() throws Exception {
         return ActionReturnUtil.returnSuccessWithData(epidemicService.getAreaEpidemicInformation());
@@ -30,6 +36,12 @@ public class EpidemicController {
     @RequestMapping(value = "/board", method = RequestMethod.GET)
     public ActionReturnUtil getBoardEpidemicInformation() throws Exception {
         return ActionReturnUtil.returnSuccessWithData(epidemicService.getBoardEpidemicInformation());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/school", method = RequestMethod.GET)
+    public ActionReturnUtil getSchoolEpidemicInformation() throws Exception {
+        return ActionReturnUtil.returnSuccessWithData(epidemicService.getSchoolEpidemicInformation());
     }
 
 }

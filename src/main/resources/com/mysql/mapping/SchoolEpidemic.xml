@@ -6,7 +6,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="trip" property="trip" jdbcType="VARCHAR"/>
+        <result column="trip" property="trip"/>
         <result column="tag" property="tag" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -16,13 +16,13 @@
     </sql>
 
     <insert id="addSchoolEpidemic">
-        insert into schoole_epidemic (date, name, trip, tag) values (#{date}, #{name}, #{trip}, #{tag})
+        insert into school_epidemic (date, name, trip, tag) values (#{date}, #{name}, #{trip}, #{tag})
     </insert>
 
-    <select id="listSystemMenu" resultMap="BaseResultMap">
+    <select id="listSchoolEpidemic" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from system_menu
+        from school_epidemic
     </select>
 
 </mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.shiro.dao.JwcAccountMapper">
+
+    <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.JwcAccount">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="jwc_username" property="jwcUsername" jdbcType="VARCHAR"/>
+        <result column="jwc_password" property="jwcPassword" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, student_number, jwc_username, jwc_password
+    </sql>
+
+    <insert id="bindJwcAccount">
+        insert into jwc_account (student_number, jwc_username, jwc_password)
+        values (#{studentNumber}, #{jwcUsername}, #{jwcPassword})
+    </insert>
+
+    <select id="getJwcAccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jwc_account
+        where student_number = #{studentNumber}
+    </select>
+
+
+</mapper>

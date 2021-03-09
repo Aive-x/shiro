@@ -15,7 +15,7 @@
     </sql>
 
     <insert id="setTrip">
-        insert into trip (id, student_number, position, date) values (#{studentNumber}, #{position}, #{date})
+        insert into trip (student_number, position, date) values (#{studentNumber}, #{position}, #{date})
     </insert>
 
     <select id="listTrip" resultMap="BaseResultMap">

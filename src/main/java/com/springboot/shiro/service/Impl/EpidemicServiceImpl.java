@@ -1,7 +1,9 @@
 package com.springboot.shiro.service.Impl;
 
 import com.springboot.shiro.dao.DailyReportMapper;
+import com.springboot.shiro.dao.SchoolEpidemicMapper;
 import com.springboot.shiro.dao.bean.DailyReport;
+import com.springboot.shiro.dao.bean.SchoolEpidemic;
 import com.springboot.shiro.dto.AreaEpidemic;
 import com.springboot.shiro.service.EpidemicService;
 import com.springboot.shiro.service.bean.*;
@@ -27,6 +29,8 @@ public class EpidemicServiceImpl implements EpidemicService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private SchoolEpidemicMapper schoolEpidemicMapper;
 
     @Override
     public EpidemicInformation getEpidemicInformation() throws Exception {
@@ -146,5 +150,11 @@ public class EpidemicServiceImpl implements EpidemicService {
         boardEpidemicInformation.add(cured);
         boardEpidemicInformation.add(death);
         return boardEpidemicInformation;
+    }
+
+    @Override
+    public List<SchoolEpidemic> getSchoolEpidemicInformation() throws Exception {
+        List<SchoolEpidemic> schoolEpidemicList = schoolEpidemicMapper.listSchoolEpidemic();
+        return schoolEpidemicList;
     }
 }

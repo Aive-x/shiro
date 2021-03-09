@@ -7,7 +7,8 @@ package com.springboot.shiro.common;
 public enum ErrorCodeMessage {
 
     LOGIN_FAIL(10001, "登录失败"),
-    UNKNOWN(100002,  "系统错误，请联系系统管理员");
+    UNKNOWN(100002,  "系统错误，请联系系统管理员"),
+    JWC_LOGIN_FAILED(100003, "教务处登录失败");
 
     private final int value;
     private final String reasonChPhrase;

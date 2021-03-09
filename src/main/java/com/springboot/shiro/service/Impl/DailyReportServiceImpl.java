@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -42,7 +43,8 @@ public class DailyReportServiceImpl implements DailyReportService {
         dailyReport.setDate(DateUtil.getCurrentUtcTime());
 
         // 所在地发生变化，写入行程表
-        if (!dailyReport.getPosition().equals(dailyReportList.get(dailyReportList.size() - 1).getPosition())) {
+        if (!CollectionUtils.isEmpty(dailyReportList)
+            && !dailyReport.getPosition().equals(dailyReportList.get(dailyReportList.size() - 1).getPosition())) {
             Trip trip = new Trip();
             trip.setStudentNumber(dailyReport.getStudentNumber());
             trip.setPosition(dailyReport.getPosition());
