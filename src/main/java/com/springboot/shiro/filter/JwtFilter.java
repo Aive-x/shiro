@@ -2,6 +2,7 @@ package com.springboot.shiro.filter;
 
 import com.springboot.shiro.dao.bean.JwtToken;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -24,6 +25,9 @@ public class JwtFilter extends AuthenticatingFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {
+            return true;
+        }
+        if (StringUtils.isEmpty(getAuthzHeader(request))){
             return true;
         }
         boolean allowed = false;

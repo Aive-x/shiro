@@ -15,4 +15,6 @@ public interface TripMapper {
     void setTrip(Trip trip);
 
     List<Trip> listTrip(String StudentNumber);
+
+    List<Trip> getTripByCity(String City);
 }

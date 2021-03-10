@@ -5,26 +5,35 @@
     <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.Trip">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="position" property="position" jdbcType="VARCHAR"/>
         <result column="date" property="date"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, student_number, position , date
+        id, student_number,province, city, position , date
     </sql>
 
     <insert id="setTrip">
-        insert into trip (student_number, position, date) values (#{studentNumber}, #{position}, #{date})
+        insert into trip (student_number,province, city, position, date)
+        values (#{studentNumber}, #{province}, #{city}, #{position}, #{date})
     </insert>
 
     <select id="listTrip" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user
+        from trip
         <if test="studentNUmber != null">
             where student_number = #{studentNUmber}
         </if>
+    </select>
+
+    <select id="getTripByCity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from trip where city = #{city}
     </select>
 
 </mapper>

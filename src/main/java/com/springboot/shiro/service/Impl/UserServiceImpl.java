@@ -6,6 +6,8 @@ import com.springboot.shiro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author xutianhong
  * @Date 2020/9/24 9:58
@@ -22,6 +24,11 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.getUserById(id);
 
         return user;
+    }
+
+    @Override
+    public List<User> getSameDormitoryStudent(String studentNumber, String dormitory) {
+        return userMapper.getSameDormitoryStudent(dormitory, studentNumber);
     }
 
     @Override

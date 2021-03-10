@@ -12,6 +12,8 @@ import java.util.Date;
 public class Trip {
     private String id;
     private String studentNumber;
+    private String province;
+    private String city;
     private String position;
     private Date date;
 }

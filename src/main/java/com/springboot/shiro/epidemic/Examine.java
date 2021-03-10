@@ -1,12 +1,18 @@
 package com.springboot.shiro.epidemic;
 
 import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
+import com.springboot.shiro.dao.TripMapper;
 import com.springboot.shiro.dao.UserMapper;
 import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
+import com.springboot.shiro.dao.bean.Trip;
 import com.springboot.shiro.dao.bean.User;
+import com.springboot.shiro.service.StudentEpidemicInfoService;
+import com.springboot.shiro.service.UserService;
+import com.springboot.shiro.service.bean.Children;
 import com.springboot.shiro.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -18,27 +24,39 @@ import java.util.List;
 public class Examine {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
     @Autowired
-    private StudentEpidemicInformationMapper studentEpidemicInformationMapper;
+    private TripMapper tripMapper;
+    @Autowired
+    private StudentEpidemicInfoService studentEpidemicInfoService;
 
     public void touchPeople(String studentNumber) {
-        User user = userMapper.getUserByUsername(studentNumber);
-        // TODO 获取相同教室上课，同一寝室
-        // TODO 发现问题，获取统一教室上课的同学，是否意味着就是要遍历一遍所有人————拉一个线程，每隔一段时间走一遍，写入redis？
-        List<User> sameDormitoryStudentList = userMapper.getSameDormitoryStudent(user.getDormitory(), studentNumber);
-        sameDormitoryStudentList.forEach(sameDormitoryStudent -> {
-            StudentEpidemicInformation sameDormitoryStudentEpidemic = new StudentEpidemicInformation();
-            sameDormitoryStudentEpidemic.setDate(DateUtil.getCurrentUtcTime());
-            sameDormitoryStudentEpidemic.setClasses(sameDormitoryStudent.getClasses());
-            sameDormitoryStudentEpidemic.setStudentNumber(sameDormitoryStudent.getUsername());
-            sameDormitoryStudentEpidemic.setName(sameDormitoryStudent.getName());
-            sameDormitoryStudentEpidemic.setPerson(user.getName());
-            sameDormitoryStudentEpidemic.setPlace("寝室");
-            sameDormitoryStudentEpidemic.setTag("疑似");
-            studentEpidemicInformationMapper.setStudentEpidemicInformation(sameDormitoryStudentEpidemic);
-        });
+        User user = userService.getUserByUsername(studentNumber);
 
+        List<User> sameDormitoryStudentList = userService.getSameDormitoryStudent(user.getDormitory(), studentNumber);
+        sameDormitoryStudentList.forEach(sameDormitoryStudent -> {
+            studentEpidemicInfoService.setStudentEpidemicInfomation(sameDormitoryStudent.getUsername(), null,
+                user.getName(), "寝室");
+        });
+    }
+
+    public void dangerAreaStudent(List<Children> children) {
+        children.forEach(child -> {
+            if (child.getToday().getConfirm() > 0) {
+                // 获取14天内在这个地方待过的学生，并查看是否已经有被推送或发布的记录，如果没有，则推送给老师
+                List<Trip> tripList = tripMapper.getTripByCity(child.getName());
+                if (!CollectionUtils.isEmpty(tripList)) {
+                    tripList.forEach(trip -> {
+                        // 出现符合城市，并且日期在14天内
+                        if (trip.getCity().equals(child.getName())
+                            && DateUtil.getIntervalDays(DateUtil.getCurrentUtcTime(), trip.getDate()) <= 14) {
+                            studentEpidemicInfoService.setStudentEpidemicInfomation(trip.getStudentNumber(),
+                                "14天内途经城市出现疫情", null, null);
+                        }
+                    });
+                }
+            }
+        });
     }
 
 }

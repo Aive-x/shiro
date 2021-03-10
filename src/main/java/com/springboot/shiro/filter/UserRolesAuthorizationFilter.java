@@ -34,24 +34,14 @@ public class UserRolesAuthorizationFilter extends AuthorizationFilter {
         String path = getPathWithinApplication(servletRequest);
         List<String> listRoles = routeResourceService.getRoleByPath(path);
 
-        boolean[] booleans =  subject.hasRoles(listRoles);
-        for (int i = 0; i < booleans.length; ++i){
-            if (booleans[i]){
+        for (String role : listRoles){
+            if (role.contains("anyone")){
                 return true;
             }
-        }
-
-        /*String[] rolesArray = (String[]) mappedValue;
-        //没有角色限制，有权限访问
-        if (rolesArray == null || rolesArray.length == 0) {
-            return true;
-        }
-        for (String role : rolesArray) {
-            //若当前用户是rolesArray中的任何一个，则有权限访问
             if (subject.hasRole(role)){
                 return true;
             }
-        }*/
+        }
         return false;
     }
 

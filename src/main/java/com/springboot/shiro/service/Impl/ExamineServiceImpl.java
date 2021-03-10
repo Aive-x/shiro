@@ -31,6 +31,7 @@ public class ExamineServiceImpl implements ExamineService {
     @Autowired
     private JwcAccountMapper jwcAccountMapper;
 
+    //todo 需要允许老师在发布时修改tag，因此需要传所有内容，而非id
     @Override
     public void publishStudentEpidemic(String ids) throws Exception {
         String[] idList = ids.split(",");

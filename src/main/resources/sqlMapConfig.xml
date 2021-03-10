@@ -19,6 +19,7 @@
         <typeAlias alias="Trip" type="com.springboot.shiro.dao.bean.Trip"/>
         <typeAlias alias="SchoolEpidemic" type="com.springboot.shiro.dao.bean.SchoolEpidemic"/>
         <typeAlias alias="JwcAccount" type="com.springboot.shiro.dao.bean.JwcAccount"/>
+        <typeAlias alias="area" type="com.springboot.shiro.dao.bean.Area"/>
     </typeAliases>
 
     <mappers>
@@ -31,6 +32,7 @@
         <mapper resource="com/mysql/mapping/Trip.xml" />
         <mapper resource="com/mysql/mapping/SchoolEpidemic.xml" />
         <mapper resource="com/mysql/mapping/JwcAccount.xml" />
+        <mapper resource="com/mysql/mapping/area.xml" />
     </mappers>
 
 </configuration>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.springboot.shiro.dao.AreaMapper">
+
+    <resultMap id="BaseResultMap" type="com.springboot.shiro.dao.bean.Area">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id, province, city
+    </sql>
+
+    <insert id="addArea">
+        insert into area (province, city) values (#{province}, #{city})
+    </insert>
+
+    <select id="getProvince" resultMap="BaseResultMap">
+        select province from area
+    </select>
+
+    <select id="getCity" resultMap="BaseResultMap">
+        select city from area where province = #{province}
+    </select>
+
+    <select id="listCities" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from area
+    </select>
+
+</mapper>

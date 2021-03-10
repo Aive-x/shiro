@@ -8,7 +8,9 @@ import com.springboot.shiro.dao.bean.DailyReport;
 import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.dao.bean.Trip;
 import com.springboot.shiro.dao.bean.User;
+import com.springboot.shiro.epidemic.Examine;
 import com.springboot.shiro.service.DailyReportService;
+import com.springboot.shiro.service.StudentEpidemicInfoService;
 import com.springboot.shiro.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,9 +33,9 @@ public class DailyReportServiceImpl implements DailyReportService {
     @Autowired
     private TripMapper tripMapper;
     @Autowired
-    private UserMapper userMapper;
+    private StudentEpidemicInfoService studentEpidemicInfoService;
     @Autowired
-    private StudentEpidemicInformationMapper studentEpidemicInformationMapper;
+    private Examine examine;
 
     @Override
     public void addDailyReport(DailyReport dailyReport) throws Exception {
@@ -54,18 +56,9 @@ public class DailyReportServiceImpl implements DailyReportService {
         dailyReportMapper.addDailyReport(dailyReport);
 
         if (dailyReport.getTemperature() > 37.3) {
-            User user = userMapper.getUserByUsername(dailyReport.getStudentNumber());
-            StudentEpidemicInformation studentEpidemicInformation = new StudentEpidemicInformation();
-            studentEpidemicInformation.setDate(dailyReport.getDate());
-            studentEpidemicInformation.setClasses(user.getClasses());
-            studentEpidemicInformation.setStudentNumber(dailyReport.getStudentNumber());
-            studentEpidemicInformation.setName(user.getName());
-            studentEpidemicInformation.setOthers("体温高于正常体温");
-            studentEpidemicInformation.setTag("疑似");
-            studentEpidemicInformationMapper.setStudentEpidemicInformation(studentEpidemicInformation);
-
-            // todo 调取方法，获取各类疑似人员
-
+            studentEpidemicInfoService.setStudentEpidemicInfomation(dailyReport.getStudentNumber(), "体温高于正常体温", null,
+                null);
+            examine.touchPeople(dailyReport.getStudentNumber());
         }
 
     }
