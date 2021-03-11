@@ -31,6 +31,11 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
     }
 
     @Override
+    public StudentEpidemicInformation getStudentEpidemicInformationById(String id) {
+        return studentEpidemicInformationMapper.getStudentEpidemicInformationById(id);
+    }
+
+    @Override
     public void setStudentEpidemicInfomation(String studentNumber, String others, String person, String place) {
         User user = userService.getUserByUsername(studentNumber);
         StudentEpidemicInformation studentEpidemicInformation = new StudentEpidemicInformation();

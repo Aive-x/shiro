@@ -8,6 +8,7 @@ import com.springboot.shiro.dao.bean.SchoolEpidemic;
 import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.service.CourseService;
 import com.springboot.shiro.service.ExamineService;
+import com.springboot.shiro.service.StudentEpidemicInfoService;
 import com.springboot.shiro.service.bean.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,35 +26,35 @@ public class ExamineServiceImpl implements ExamineService {
     @Autowired
     private SchoolEpidemicMapper schoolEpidemicMapper;
     @Autowired
-    private StudentEpidemicInformationMapper studentEpidemicInformationMapper;
+    private StudentEpidemicInfoService studentEpidemicInfoService;
     @Autowired
     private CourseService courseService;
     @Autowired
     private JwcAccountMapper jwcAccountMapper;
 
-    //todo 需要允许老师在发布时修改tag，因此需要传所有内容，而非id
+    // todo 需要允许老师在发布时修改tag，因此需要传所有内容，而非id
     @Override
     public void publishStudentEpidemic(String ids) throws Exception {
         String[] idList = ids.split(",");
         for (int i = 0; i < idList.length; ++i) {
             StudentEpidemicInformation studentEpidemicInformation =
-                studentEpidemicInformationMapper.getStudentEpidemicInformationById(idList[i]);
+                studentEpidemicInfoService.getStudentEpidemicInformationById(idList[i]);
             SchoolEpidemic schoolEpidemic = new SchoolEpidemic();
             schoolEpidemic.setDate(studentEpidemicInformation.getDate());
             schoolEpidemic.setName(studentEpidemicInformation.getName());
 
-            //获取教务处账号用于登陆教务管理系统
+            // 获取教务处账号用于登陆教务管理系统
             JwcAccount jwcAccount = jwcAccountMapper.getJwcAccount(studentEpidemicInformation.getStudentNumber());
-            //获取课程列表
+            // 获取课程列表
             List<Course> courseList = courseService.listCourse(jwcAccount);
-            //整理课程列表信息
+            // 整理课程列表信息
             Map<String, List<Course>> courseListMap =
                 courseList.stream().collect(Collectors.groupingBy(Course::getDay));
             List<String> tripList = new ArrayList<>();
 
             courseListMap.forEach((day, courses) -> {
                 String dayTrip = "";
-                switch (day){
+                switch (day) {
                     case "周一":
                         dayTrip = "1" + day + ":\n";
                         break;
@@ -72,7 +73,7 @@ public class ExamineServiceImpl implements ExamineService {
                     default:
                         throw new IllegalStateException("Unexpected value: " + day);
                 }
-                //tring dayTrip = day + ":\n";
+                // tring dayTrip = day + ":\n";
                 for (Course course : courses) {
                     dayTrip = dayTrip + course.getNumber() + "   "
                         + course.getClassRoom().substring(0, course.getClassRoom().indexOf("楼") + 4) + "\n";
@@ -81,7 +82,7 @@ public class ExamineServiceImpl implements ExamineService {
             });
             String trip = "";
             Collections.sort(tripList);
-            for (String dayTrip: tripList){
+            for (String dayTrip : tripList) {
                 trip = trip + dayTrip;
             }
 

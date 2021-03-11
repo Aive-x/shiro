@@ -1,8 +1,13 @@
 package com.springboot.shiro.service.Impl;
 
+import com.alibaba.druid.sql.visitor.functions.Char;
 import com.springboot.shiro.dao.UserMapper;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    private static final String encryptSalt = "F12839WhsnnEV$#23b";
 
     @Override
     public User getUserById(Integer id){
@@ -37,4 +43,10 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void updatePassword(String username, String password) {
+        char[] test = password.toCharArray();
+        Object hashPassword = new SimpleHash("SHA-256", test, ByteSource.Util.bytes(encryptSalt), 1);
+        userMapper.updatePassword(username, hashPassword.toString());
+    }
 }

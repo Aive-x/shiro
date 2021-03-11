@@ -37,4 +37,8 @@
         from user where dormitory = #{dormitory} and username != #{username}
     </select>
 
+    <update id="updatePassword">
+        update user set password = #{password} where username = #{username}
+    </update>
+
 </mapper>

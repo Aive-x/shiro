@@ -16,4 +16,6 @@ public interface UserService {
 
     List<User> getSameDormitoryStudent(String studentNumber, String dormitory);
 
+    void updatePassword(String username, String password);
+
 }
