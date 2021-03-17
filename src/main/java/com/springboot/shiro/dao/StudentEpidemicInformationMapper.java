@@ -16,4 +16,6 @@ public interface StudentEpidemicInformationMapper {
     void setStudentEpidemicInformation(StudentEpidemicInformation studentEpidemicInformation);
 
     StudentEpidemicInformation getStudentEpidemicInformationById(String id);
+
+    void updatePublish(String id);
 }

@@ -18,4 +18,8 @@ public interface UserService {
 
     void updatePassword(String username, String password);
 
+    List<User> listUsers() throws Exception;
+
+    void addUser(User user) throws Exception;
+
 }

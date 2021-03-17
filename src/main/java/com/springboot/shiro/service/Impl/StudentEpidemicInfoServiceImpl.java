@@ -49,4 +49,9 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
         studentEpidemicInformation.setTag("疑似");
         studentEpidemicInformationMapper.setStudentEpidemicInformation(studentEpidemicInformation);
     }
+
+    @Override
+    public void updatePublish(String id) {
+        studentEpidemicInformationMapper.updatePublish(id);
+    }
 }

@@ -49,4 +49,14 @@ public class UserServiceImpl implements UserService {
         Object hashPassword = new SimpleHash("SHA-256", test, ByteSource.Util.bytes(encryptSalt), 1);
         userMapper.updatePassword(username, hashPassword.toString());
     }
+
+    @Override
+    public List<User> listUsers() throws Exception {
+        return userMapper.listUsers();
+    }
+
+    @Override
+    public void addUser(User user) throws Exception {
+        userMapper.addUser(user);
+    }
 }

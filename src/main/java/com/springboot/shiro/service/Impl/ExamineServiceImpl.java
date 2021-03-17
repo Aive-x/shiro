@@ -89,6 +89,7 @@ public class ExamineServiceImpl implements ExamineService {
             schoolEpidemic.setTrip(trip);
             schoolEpidemic.setTag(studentEpidemicInformation.getTag());
             schoolEpidemicMapper.addSchoolEpidemic(schoolEpidemic);
+            studentEpidemicInfoService.updatePublish(idList[i]);
         }
 
     }

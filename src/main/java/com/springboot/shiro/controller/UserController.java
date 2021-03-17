@@ -1,5 +1,6 @@
 package com.springboot.shiro.controller;
 
+import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.UserService;
 import com.springboot.shiro.util.ActionReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,19 @@ public class UserController {
     private ActionReturnUtil updatePassword(@RequestParam("username") String username,
                                             @RequestParam("password") String password){
         userService.updatePassword(username, password);
+        return ActionReturnUtil.returnSuccess();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    private ActionReturnUtil listUsers() throws Exception{
+        return ActionReturnUtil.returnSuccessWithData(userService.listUsers());
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    private ActionReturnUtil addUser(User user) throws Exception{
+        userService.addUser(user);
         return ActionReturnUtil.returnSuccess();
     }
 

@@ -42,7 +42,7 @@ public class Examine {
 
     public void dangerAreaStudent(List<Children> children) {
         children.forEach(child -> {
-            if (child.getToday().getConfirm() > 0) {
+            if (child.getToday().getConfirm() != null && child.getToday().getConfirm() > 0) {
                 // 获取14天内在这个地方待过的学生，并查看是否已经有被推送或发布的记录，如果没有，则推送给老师
                 List<Trip> tripList = tripMapper.getTripByCity(child.getName());
                 if (!CollectionUtils.isEmpty(tripList)) {
@@ -58,5 +58,4 @@ public class Examine {
             }
         });
     }
-
 }

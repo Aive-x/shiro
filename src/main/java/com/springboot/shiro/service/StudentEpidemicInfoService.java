@@ -17,4 +17,6 @@ public interface StudentEpidemicInfoService {
     void setStudentEpidemicInfomation(String studentNumber, String others, String person, String place);
 
     StudentEpidemicInformation getStudentEpidemicInformationById(String id);
+
+    void updatePublish(String id);
 }

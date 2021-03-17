@@ -31,7 +31,6 @@ public class SystemServiceImpl implements SystemService {
                 content.append(temp).append("\n");
             }
         }
-        System.out.println(content.toString());
         return content.toString();
     }
 }

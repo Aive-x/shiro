@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CourseServiceImpl implements CourseService {
 
-    private static final String ZF_URL = "127.0.0.1:8060/api";
+    private static final String ZF_URL = "47.110.160.185:8060/api";
 
     @Autowired
     private UserMapper userMapper;

@@ -41,4 +41,15 @@
         update user set password = #{password} where username = #{username}
     </update>
 
+    <select id="listUsers" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+    </select>
+
+    <insert id="addUser">
+        insert into user (username, password, name, college, class, dormitory, role, phone)
+        values (#{username}, #{password}, #{name}, #{college}, #{class}, #{dormitory}, #{role}, #{phone})
+    </insert>
+
 </mapper>

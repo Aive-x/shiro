@@ -19,4 +19,5 @@ public class StudentEpidemicInformation {
     private String place;
     private String others;
     private String tag;
+    private Integer isPublished;
 }

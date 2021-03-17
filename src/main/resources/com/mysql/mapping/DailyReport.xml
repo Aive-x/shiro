@@ -6,18 +6,20 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
         <result column="temperature" property="temperature" jdbcType="DOUBLE"/>
+        <result column="province" property="province" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
         <result column="position" property="position" jdbcType="VARCHAR"/>
         <result column="date" property="date" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, student_number, temperature, position, date
+        id, student_number, temperature, province, city, position, date
     </sql>
 
     <insert id="addDailyReport">
-        insert into daily_report (student_number, temperature, position, date )
-        values (#{studentNumber}, #{temperature}, #{position}, #{date})
+        insert into daily_report (student_number, temperature,province, city, position, date )
+        values (#{studentNumber}, #{temperature}, #{province}, #{city}, #{position}, #{date})
     </insert>
 
     <select id="listDailyReport" resultMap="BaseResultMap">

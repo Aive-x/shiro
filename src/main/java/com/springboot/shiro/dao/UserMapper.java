@@ -21,4 +21,8 @@ public interface UserMapper {
 
     void updatePassword(String username, String password);
 
+    List<User> listUsers();
+
+    void addUser(User user);
+
 }
