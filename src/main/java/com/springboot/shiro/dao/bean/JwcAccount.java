@@ -12,4 +12,5 @@ public class JwcAccount {
     private String studentNumber;
     private String jwcUsername;
     private String jwcPassword;
+    private Integer bind;
 }

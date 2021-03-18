@@ -1,7 +1,9 @@
 package com.springboot.shiro.service;
 
 import com.springboot.shiro.dao.bean.User;
+import com.springboot.shiro.dto.UserDto;
 
+import javax.servlet.ServletRequest;
 import java.util.List;
 
 /**
@@ -14,9 +16,11 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
+    UserDto getUserInfo(String username);
+
     List<User> getSameDormitoryStudent(String studentNumber, String dormitory);
 
-    void updatePassword(String username, String password);
+    void updatePassword(String oldPass, String newPass, String checkPass, ServletRequest request);
 
     List<User> listUsers() throws Exception;
 

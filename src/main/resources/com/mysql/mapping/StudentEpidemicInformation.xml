@@ -27,8 +27,8 @@
     </select>
 
     <insert id="setStudentEpidemicInformation">
-        insert into stu_epidemic_info (date, class, student_number, name, person, place, others, tag)
-        values (#{date}, #{classes}, #{studentNumber}, #{name}, #{person}, #{place}, #{others}, #{tag})
+        insert into stu_epidemic_info (date, class, student_number, name, person, place, others, tag, isPublished)
+        values (#{date}, #{classes}, #{studentNumber}, #{name}, #{person}, #{place}, #{others}, #{tag}, #{isPublished})
     </insert>
 
     <select id="getStudentEpidemicInformationById" resultMap="BaseResultMap">
@@ -38,7 +38,7 @@
     </select>
 
     <update id="updatePublish">
-        update stu_epidemic_info set isPublished = 1
+        update stu_epidemic_info set isPublished = 1, tag = #{tag} where id = #{id}
     </update>
 
 

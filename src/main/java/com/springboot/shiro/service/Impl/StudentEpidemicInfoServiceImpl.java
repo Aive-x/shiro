@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.unit.DataUnit;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,7 +28,10 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
 
     @Override
     public List<StudentEpidemicInformation> getStudentEpidemicInfomation() throws Exception {
-        return studentEpidemicInformationMapper.listStudentEpidemicInformation();
+        List<StudentEpidemicInformation> studentEpidemicInformationList =
+            studentEpidemicInformationMapper.listStudentEpidemicInformation();
+        Collections.reverse(studentEpidemicInformationList);
+        return studentEpidemicInformationList;
     }
 
     @Override
@@ -47,11 +51,17 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
         studentEpidemicInformation.setPlace(place);
         studentEpidemicInformation.setOthers(others);
         studentEpidemicInformation.setTag("疑似");
+        studentEpidemicInformation.setIsPublished(0);
         studentEpidemicInformationMapper.setStudentEpidemicInformation(studentEpidemicInformation);
     }
 
     @Override
-    public void updatePublish(String id) {
-        studentEpidemicInformationMapper.updatePublish(id);
+    public void publishCustomContent(StudentEpidemicInformation studentEpidemicInformation) {
+        studentEpidemicInformationMapper.setStudentEpidemicInformation(studentEpidemicInformation);
+    }
+
+    @Override
+    public void updatePublish(StudentEpidemicInformation studentEpidemicInformation) {
+        studentEpidemicInformationMapper.updatePublish(studentEpidemicInformation);
     }
 }

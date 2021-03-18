@@ -22,6 +22,7 @@ public class SystemServiceImpl implements SystemService {
     public String getLog() throws Exception {
 
         String temp = "";
+        //todo 修改路径
         InputStreamReader inputStreamReader = new InputStreamReader(
             new FileInputStream(new File("/Users/aive/Desktop/messages")), StandardCharsets.UTF_8);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);

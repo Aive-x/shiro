@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface CourseService {
 
+    JwcAccount getJwcAccount(String studentNumber);
+
     boolean jwcBind(JwcAccount jwcAccount) throws Exception;
 
     boolean doJwcLogin(JwcAccount jwcAccount) throws Exception;

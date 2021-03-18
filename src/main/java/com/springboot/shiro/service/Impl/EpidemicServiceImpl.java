@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -157,6 +159,7 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public List<SchoolEpidemic> getSchoolEpidemicInformation() throws Exception {
         List<SchoolEpidemic> schoolEpidemicList = schoolEpidemicMapper.listSchoolEpidemic();
+        Collections.reverse(schoolEpidemicList);
         return schoolEpidemicList;
     }
 }

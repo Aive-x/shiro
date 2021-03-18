@@ -1,5 +1,6 @@
 package com.springboot.shiro.controller;
 
+import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.service.ExamineService;
 import com.springboot.shiro.util.ActionReturnUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,16 @@ public class ExamineController {
 
     @ResponseBody
     @RequestMapping(value = "/publish", method = RequestMethod.POST)
-    public ActionReturnUtil publishStudentEpidemic(@RequestParam("ids") String ids) throws Exception {
-        examineService.publishStudentEpidemic(ids);
+    public ActionReturnUtil publishStudentEpidemic(@RequestParam("ids") String ids,
+                                                   @RequestParam("tags") String tags) throws Exception {
+        examineService.publishStudentEpidemic(ids, tags);
+        return ActionReturnUtil.returnSuccess();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/custom", method = RequestMethod.POST)
+    public ActionReturnUtil publishCustomContent(StudentEpidemicInformation studentEpidemicInformation) throws Exception {
+        examineService.publishCustomContent(studentEpidemicInformation);
         return ActionReturnUtil.returnSuccess();
     }
 

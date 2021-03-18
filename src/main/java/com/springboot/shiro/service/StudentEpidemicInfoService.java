@@ -18,5 +18,7 @@ public interface StudentEpidemicInfoService {
 
     StudentEpidemicInformation getStudentEpidemicInformationById(String id);
 
-    void updatePublish(String id);
+    void updatePublish(StudentEpidemicInformation studentEpidemicInformation);
+
+    void publishCustomContent(StudentEpidemicInformation studentEpidemicInformation);
 }

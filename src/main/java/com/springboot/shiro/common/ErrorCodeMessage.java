@@ -6,9 +6,13 @@ package com.springboot.shiro.common;
  */
 public enum ErrorCodeMessage {
 
-    LOGIN_FAIL(10001, "登录失败"),
+    LOGIN_FAIL(10001, "登录失败,账号密码错误"),
     UNKNOWN(100002,  "系统错误，请联系系统管理员"),
-    JWC_LOGIN_FAILED(100003, "教务处登录失败");
+    JWC_LOGIN_FAILED(100003, "教务处登录失败"),
+    WRONG_PASSWORD(100004, "密码错误"),
+    PASSWORD_NOT_SAME(100005, "新密码与确认密码不同"),
+    STUDENT_NUMBER_EMPTY(100006,"学号不能为空"),
+    TAG_EMPTY(100006,"tag不能为空"),;
 
     private final int value;
     private final String reasonChPhrase;

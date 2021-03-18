@@ -12,6 +12,7 @@ import com.springboot.shiro.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -35,13 +36,24 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean jwcBind(JwcAccount jwcAccount) throws Exception {
         doJwcLogin(jwcAccount);
+        jwcAccount.setBind(0);
         jwcAccountMapper.bindJwcAccount(jwcAccount);
         return true;
     }
 
     @Override
+    public JwcAccount getJwcAccount(String studentNumber) {
+        return jwcAccountMapper.getJwcAccount(studentNumber);
+    }
+
+    @Override
     public boolean doJwcLogin(JwcAccount jwcAccount) throws Exception {
         if (!jwcLogin(jwcAccount)) {
+            JwcAccount existJwcAccount = this.getJwcAccount(jwcAccount.getStudentNumber());
+            if (!ObjectUtils.isEmpty(existJwcAccount) && existJwcAccount.getBind() == 1){
+                existJwcAccount.setBind(0);
+                jwcAccountMapper.bindJwcAccount(existJwcAccount);
+            }
             throw new MarsRuntimeException(ErrorCodeMessage.JWC_LOGIN_FAILED);
         }
         return true;
@@ -61,10 +73,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> listCourse(JwcAccount jwcAccount) throws Exception {
+        doJwcLogin(jwcAccount);
         String url = "/DefaultCourseList" + "?userNumber=" + jwcAccount.getJwcUsername() + "&userPassword="
             + jwcAccount.getJwcPassword();
         Map<String, Object> result = HttpClientUtil.httpGetClient(ZF_URL + url, null, null);
 
+        jwcAccount.setBind(1);
+        jwcAccountMapper.bindJwcAccount(jwcAccount);
         return JsonUtil.jsonToList(result.get("body").toString(), Course.class);
     }
 

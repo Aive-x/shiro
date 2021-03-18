@@ -7,16 +7,17 @@
         <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
         <result column="jwc_username" property="jwcUsername" jdbcType="VARCHAR"/>
         <result column="jwc_password" property="jwcPassword" jdbcType="VARCHAR"/>
+        <result column="bind" property="bind" jdbcType="TINYINT"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, student_number, jwc_username, jwc_password
+        id, student_number, jwc_username, jwc_password, bind
     </sql>
 
     <insert id="bindJwcAccount">
-        insert into jwc_account (student_number, jwc_username, jwc_password)
-        values (#{studentNumber}, #{jwcUsername}, #{jwcPassword})
+        insert into jwc_account (student_number, jwc_username, jwc_password, bind)
+        values (#{studentNumber}, #{jwcUsername}, #{jwcPassword}, #{bind})
     </insert>
 
     <select id="getJwcAccount" resultMap="BaseResultMap">

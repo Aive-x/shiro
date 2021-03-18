@@ -30,7 +30,6 @@ public class LoginController {
                                   HttpServletResponse response) throws Exception{
         String token = loginService.doLogin(username, password);
         response.setHeader("Authorization", token);
-        //response.setHeader("Access-Control-Allow-Origin", "*");
         return ActionReturnUtil.returnSuccessWithData(token);
     }
 }
