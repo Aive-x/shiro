@@ -26,8 +26,6 @@ public class DailyReportController {
 
     @Autowired
     private DailyReportService dailyReportService;
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -39,9 +37,8 @@ public class DailyReportController {
     @ResponseBody
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ActionReturnUtil addDailyReport(ServletRequest request) throws Exception {
-        HttpServletRequest httpRequest = WebUtils.toHttp(request);
         return ActionReturnUtil.returnSuccessWithData(
-            dailyReportService.getReportHistory(jwtUtil.getUsername(httpRequest.getHeader("Authorization"))));
+            dailyReportService.getReportHistory(JwtUtil.getUsername(request)));
     }
 
     @ResponseBody

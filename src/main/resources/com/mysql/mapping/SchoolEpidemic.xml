@@ -6,23 +6,32 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="date" property="date"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="student_number" property="studentNumber" jdbcType="VARCHAR"/>
+        <result column="place" property="place" jdbcType="VARCHAR"/>
         <result column="trip" property="trip"/>
         <result column="tag" property="tag" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
-        id, date, name, trip, tag
+        id, date, name, student_number, place, trip, tag, operator
     </sql>
 
     <insert id="addSchoolEpidemic">
-        insert into school_epidemic (date, name, trip, tag) values (#{date}, #{name}, #{trip}, #{tag})
+        insert into school_epidemic (date, name, student_number, place, trip, tag, operator) values (#{date}, #{name}, #{studentNumber}, #{place}, #{trip}, #{tag}, #{operator})
     </insert>
 
     <select id="listSchoolEpidemic" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from school_epidemic
+    </select>
+
+    <select id="getSchoolEpidemicById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from school_epidemic where id = #{id}
     </select>
 
 </mapper>

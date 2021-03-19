@@ -5,19 +5,14 @@ import com.springboot.shiro.common.MarsRuntimeException;
 import com.springboot.shiro.dao.JwcAccountMapper;
 import com.springboot.shiro.dao.SchoolEpidemicMapper;
 import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
-import com.springboot.shiro.dao.bean.JwcAccount;
-import com.springboot.shiro.dao.bean.SchoolEpidemic;
-import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
-import com.springboot.shiro.dao.bean.User;
-import com.springboot.shiro.service.CourseService;
-import com.springboot.shiro.service.ExamineService;
-import com.springboot.shiro.service.StudentEpidemicInfoService;
-import com.springboot.shiro.service.UserService;
+import com.springboot.shiro.dao.bean.*;
+import com.springboot.shiro.service.*;
 import com.springboot.shiro.service.bean.Course;
 import com.springboot.shiro.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,16 +32,18 @@ public class ExamineServiceImpl implements ExamineService {
     private CourseService courseService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TripService tripService;
 
     @Override
-    public void publishStudentEpidemic(String ids, String tags) throws Exception {
+    public void publishStudentEpidemic(String ids, String tags, String operator) throws Exception {
         String[] idList = ids.split(",");
         String[] tagList = tags.split(",");
         for (int i = 0; i < idList.length; ++i) {
             StudentEpidemicInformation studentEpidemicInformation =
                 studentEpidemicInfoService.getStudentEpidemicInformationById(idList[i]);
             // 生成schoolEpidemic数据，并写入数据库
-            this.addSchoolEpidemic(studentEpidemicInformation, tagList[i]);
+            this.addSchoolEpidemic(studentEpidemicInformation, tagList[i], operator);
             studentEpidemicInformation.setTag(tagList[i]);
             studentEpidemicInfoService.updatePublish(studentEpidemicInformation);
         }
@@ -68,7 +65,7 @@ public class ExamineServiceImpl implements ExamineService {
         studentEpidemicInfoService.publishCustomContent(studentEpidemicInformation);
     }
 
-    public void addSchoolEpidemic(StudentEpidemicInformation studentEpidemicInformation, String tag) throws Exception {
+    public void addSchoolEpidemic(StudentEpidemicInformation studentEpidemicInformation, String tag, String operator) throws Exception {
         SchoolEpidemic schoolEpidemic = new SchoolEpidemic();
         schoolEpidemic.setDate(studentEpidemicInformation.getDate());
         schoolEpidemic.setName(studentEpidemicInformation.getName());
@@ -114,8 +111,16 @@ public class ExamineServiceImpl implements ExamineService {
             trip = trip + dayTrip;
         }
 
+        List<Trip> locationList = tripService.listTrip(studentEpidemicInformation.getStudentNumber());
+        if (!CollectionUtils.isEmpty(locationList)){
+            Trip location = locationList.get(locationList.size() - 1);
+            schoolEpidemic.setPlace(location.getProvince() + "-" + location.getCity() + "-" + location.getPosition());
+        }
         schoolEpidemic.setTrip(trip);
         schoolEpidemic.setTag(tag);
+        schoolEpidemic.setStudentNumber(studentEpidemicInformation.getStudentNumber());
+        User user = userService.getUserByUsername(operator);
+        schoolEpidemic.setOperator(user.getName());
         schoolEpidemicMapper.addSchoolEpidemic(schoolEpidemic);
     }
 }

@@ -3,9 +3,12 @@ package com.springboot.shiro.service.Impl;
 import com.springboot.shiro.dao.AreaMapper;
 import com.springboot.shiro.dao.SchoolEpidemicMapper;
 import com.springboot.shiro.dao.bean.SchoolEpidemic;
+import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.dto.AreaEpidemic;
+import com.springboot.shiro.dto.SchoolEpidemicDetailDto;
 import com.springboot.shiro.epidemic.Examine;
 import com.springboot.shiro.service.EpidemicService;
+import com.springboot.shiro.service.UserService;
 import com.springboot.shiro.service.bean.*;
 import com.springboot.shiro.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,8 @@ public class EpidemicServiceImpl implements EpidemicService {
     private SchoolEpidemicMapper schoolEpidemicMapper;
     @Autowired
     private Examine examine;
+    @Autowired
+    private UserService userService;
 
     @Override
     public EpidemicInformation getEpidemicInformation() throws Exception {
@@ -56,19 +61,6 @@ public class EpidemicServiceImpl implements EpidemicService {
             areaEpidemic.setConfirmedCount(area.getTotal().getConfirm());
             areaEpidemicList.add(areaEpidemic);
         });
-
-        // 提取省市写入数据库，仅执行一次
-        /*Map<String, List<Children>> areaMap =
-            areaTree.getChildren().stream().collect(Collectors.toMap(Children::getName, Children::getChildren));
-        
-        areaMap.forEach((name, child) -> {
-            child.forEach(city -> {
-                if (filterArea(city)){
-                    areaMapper.addArea(name, city.getName());
-                    System.out.println(name + city.getName());
-                }
-            });
-        });*/
         return areaEpidemicList;
     }
 
@@ -161,5 +153,19 @@ public class EpidemicServiceImpl implements EpidemicService {
         List<SchoolEpidemic> schoolEpidemicList = schoolEpidemicMapper.listSchoolEpidemic();
         Collections.reverse(schoolEpidemicList);
         return schoolEpidemicList;
+    }
+
+    @Override
+    public SchoolEpidemicDetailDto getSchoolEpidemicInfoDetail(String id) {
+
+        SchoolEpidemicDetailDto schoolEpidemicDetailDto = new SchoolEpidemicDetailDto();
+        SchoolEpidemic schoolEpidemic = schoolEpidemicMapper.getSchoolEpidemicById(id);
+        schoolEpidemicDetailDto.setName(schoolEpidemic.getName());
+        schoolEpidemicDetailDto.setDate(schoolEpidemic.getDate());
+        schoolEpidemicDetailDto.setOperator(schoolEpidemic.getOperator());
+        schoolEpidemicDetailDto.setTrip(schoolEpidemic.getTrip());
+        User user = userService.getUserByUsername(schoolEpidemic.getStudentNumber());
+        schoolEpidemicDetailDto.setClasses(user.getClasses());
+        return schoolEpidemicDetailDto;
     }
 }

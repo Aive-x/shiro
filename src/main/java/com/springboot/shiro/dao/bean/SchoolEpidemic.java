@@ -13,6 +13,9 @@ public class SchoolEpidemic {
     private Integer id;
     private Date date;
     private String name;
+    private String studentNumber;
+    private String place;
     private String trip;
     private String tag;
+    private String operator;
 }

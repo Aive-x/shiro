@@ -1,12 +1,9 @@
 package com.springboot.shiro.epidemic;
 
-import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
-import com.springboot.shiro.dao.TripMapper;
-import com.springboot.shiro.dao.UserMapper;
-import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.dao.bean.Trip;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.StudentEpidemicInfoService;
+import com.springboot.shiro.service.TripService;
 import com.springboot.shiro.service.UserService;
 import com.springboot.shiro.service.bean.Children;
 import com.springboot.shiro.util.DateUtil;
@@ -26,7 +23,7 @@ public class Examine {
     @Autowired
     private UserService userService;
     @Autowired
-    private TripMapper tripMapper;
+    private TripService tripService;
     @Autowired
     private StudentEpidemicInfoService studentEpidemicInfoService;
 
@@ -44,7 +41,7 @@ public class Examine {
         children.forEach(child -> {
             if (child.getToday().getConfirm() != null && child.getToday().getConfirm() > 0) {
                 // 获取14天内在这个地方待过的学生，并查看是否已经有被推送或发布的记录，如果没有，则推送给老师
-                List<Trip> tripList = tripMapper.getTripByCity(child.getName());
+                List<Trip> tripList = tripService.getTripByCity(child.getName());
                 if (!CollectionUtils.isEmpty(tripList)) {
                     tripList.forEach(trip -> {
                         // 出现符合城市，并且日期在14天内

@@ -18,13 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TabsController {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @RequestMapping(value = "/tabs", method = RequestMethod.POST)
     @ResponseBody
     public ActionReturnUtil getTabs(@RequestParam("token") String token) throws Exception{
-        String role = jwtUtil.getUserRole(token);
+        String role = JwtUtil.getUserRole(token);
         String tabsNumber = "";
         switch (role){
             case "student":

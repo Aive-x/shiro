@@ -15,4 +15,6 @@ public interface SchoolEpidemicMapper {
     void addSchoolEpidemic(SchoolEpidemic schoolEpidemic);
 
     List<SchoolEpidemic> listSchoolEpidemic();
+
+    SchoolEpidemic getSchoolEpidemicById(String id);
 }

@@ -44,4 +44,10 @@ public class EpidemicController {
         return ActionReturnUtil.returnSuccessWithData(epidemicService.getSchoolEpidemicInformation());
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/school/detail", method = RequestMethod.GET)
+    public ActionReturnUtil getSchoolEpidemicInformationDetail(@RequestParam("id") String id) throws Exception {
+        return ActionReturnUtil.returnSuccessWithData(epidemicService.getSchoolEpidemicInfoDetail(id));
+    }
+
 }

@@ -24,9 +24,6 @@ public class LoginRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
 
     public LoginRealm() {
         //因为数据库中的密码做了散列，所以使用shiro的散列Matcher
@@ -45,7 +42,7 @@ public class LoginRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
-        String role = jwtUtil.getClaimsFromToken((String)principalCollection.getPrimaryPrincipal()).get("role").toString();
+        String role = JwtUtil.getClaimsFromToken((String)principalCollection.getPrimaryPrincipal()).get("role").toString();
         simpleAuthorizationInfo.addRole(role);
 
         return simpleAuthorizationInfo;

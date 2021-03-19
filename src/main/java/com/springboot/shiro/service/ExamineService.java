@@ -8,7 +8,7 @@ import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
  */
 public interface ExamineService {
 
-    void publishStudentEpidemic(String ids, String tags) throws Exception;
+    void publishStudentEpidemic(String ids, String tags, String username) throws Exception;
 
     void publishCustomContent(StudentEpidemicInformation studentEpidemicInformation) throws Exception;
 }

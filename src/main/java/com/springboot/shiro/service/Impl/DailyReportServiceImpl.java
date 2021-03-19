@@ -1,9 +1,6 @@
 package com.springboot.shiro.service.Impl;
 
 import com.springboot.shiro.dao.DailyReportMapper;
-import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
-import com.springboot.shiro.dao.TripMapper;
-import com.springboot.shiro.dao.UserMapper;
 import com.springboot.shiro.dao.bean.DailyReport;
 import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.dao.bean.Trip;
@@ -12,6 +9,7 @@ import com.springboot.shiro.dto.DailyReportDto;
 import com.springboot.shiro.epidemic.Examine;
 import com.springboot.shiro.service.DailyReportService;
 import com.springboot.shiro.service.StudentEpidemicInfoService;
+import com.springboot.shiro.service.TripService;
 import com.springboot.shiro.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +31,7 @@ public class DailyReportServiceImpl implements DailyReportService {
     @Autowired
     private DailyReportMapper dailyReportMapper;
     @Autowired
-    private TripMapper tripMapper;
+    private TripService tripService;
     @Autowired
     private StudentEpidemicInfoService studentEpidemicInfoService;
     @Autowired
@@ -58,7 +56,7 @@ public class DailyReportServiceImpl implements DailyReportService {
             trip.setCity(dailyReport.getCity());
             trip.setPosition(dailyReport.getPosition());
             trip.setDate(dailyReport.getDate());
-            tripMapper.setTrip(trip);
+            tripService.setTrip(trip);
         }
         dailyReportMapper.addDailyReport(dailyReport);
 

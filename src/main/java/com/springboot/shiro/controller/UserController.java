@@ -25,8 +25,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @ResponseBody
     @RequestMapping(value = "/password", method = RequestMethod.PUT)
@@ -41,9 +39,8 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     private ActionReturnUtil getUserInfo(ServletRequest request) throws Exception {
-        HttpServletRequest httpRequest = WebUtils.toHttp(request);
         return ActionReturnUtil.returnSuccessWithData(
-            userService.getUserInfo(jwtUtil.getUsername(httpRequest.getHeader("Authorization"))));
+            userService.getUserInfo(JwtUtil.getUsername(request)));
     }
 
     @ResponseBody
