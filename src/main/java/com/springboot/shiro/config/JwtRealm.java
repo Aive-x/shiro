@@ -1,5 +1,7 @@
 package com.springboot.shiro.config;
 
+import com.springboot.shiro.common.ErrorCodeMessage;
+import com.springboot.shiro.common.MarsRuntimeException;
 import com.springboot.shiro.util.JwtUtil;
 import com.springboot.shiro.dao.bean.JwtToken;
 import com.springboot.shiro.dao.bean.User;
@@ -21,9 +23,6 @@ public class JwtRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private JwtUtil jwtUtil;
 
     /*
      * 多重写一个support
@@ -56,10 +55,15 @@ public class JwtRealm extends AuthorizingRealm {
 
         //判断
         //下面是验证这个user是否是真实存在的
-        String username = jwtUtil.getUsername(token);
-        User user =  userService.getUserByUsername(username);
-        if (user == null) {
-            throw new AuthenticationException("用户"+username+"不存在") ;
+
+        try {
+            String username = JwtUtil.getUsername(token);
+            User user =  userService.getUserByUsername(username);
+            if (user == null) {
+                throw new AuthenticationException("用户"+username+"不存在") ;
+            }
+        }catch (Exception e){
+            throw new MarsRuntimeException(ErrorCodeMessage.INVALID_TOKEN);
         }
         return new SimpleAuthenticationInfo(token,token,getName());
         //这里返回的是类似账号密码的东西，但是jwtToken都是jwt字符串。还需要一个该Realm的类名

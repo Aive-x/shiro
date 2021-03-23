@@ -19,8 +19,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     @Override
     public String doLogin(String username, String password) throws Exception{
@@ -34,7 +32,7 @@ public class LoginServiceImpl implements LoginService {
         }
 
         User user = (User) subject.getPrincipal();
-        String token = jwtUtil.generateToken(JSONObject.parseObject(JSONObject.toJSONString(user)));
+        String token = JwtUtil.generateToken(JSONObject.parseObject(JSONObject.toJSONString(user)));
         System.out.println("登录成功， token： " + token);
         return token;
     }

@@ -11,6 +11,7 @@ import com.springboot.shiro.service.CourseService;
 import com.springboot.shiro.service.UserService;
 import com.springboot.shiro.util.JwtUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
@@ -34,16 +35,11 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private CourseService courseService;
-    @Autowired
-    private JwtUtil jwtUtil;
     private static final String encryptSalt = "F12839WhsnnEV$#23b";
 
     @Override
     public User getUserById(Integer id){
-
-        User user = userMapper.getUserById(id);
-
-        return user;
+        return userMapper.getUserById(id);
     }
 
     @Override
@@ -63,7 +59,7 @@ public class UserServiceImpl implements UserService {
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user, userDto);
         JwcAccount jwcAccount = courseService.getJwcAccount(userDto.getUsername());
-        if (jwcAccount.getBind() == 1){
+        if (jwcAccount != null && jwcAccount.getBind() == 1){
             userDto.setSystem("已绑定");
         }
         else {
@@ -75,7 +71,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(String oldPass, String newPass, String checkPass, ServletRequest request) {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
-        User user = userMapper.getUserByUsername(jwtUtil.getUsername(httpRequest.getHeader("Authorization")));
+        User user = userMapper.getUserByUsername(JwtUtil.getUsername(httpRequest.getHeader("Authorization")));
 
         if(!getHashPassword(oldPass).equals(user.getPassword())){
             throw new MarsRuntimeException(ErrorCodeMessage.WRONG_PASSWORD);

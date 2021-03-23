@@ -12,7 +12,8 @@ public enum ErrorCodeMessage {
     WRONG_PASSWORD(100004, "密码错误"),
     PASSWORD_NOT_SAME(100005, "新密码与确认密码不同"),
     STUDENT_NUMBER_EMPTY(100006,"学号不能为空"),
-    TAG_EMPTY(100006,"tag不能为空"),;
+    TAG_EMPTY(100006,"tag不能为空"),
+    INVALID_TOKEN(100007, "token错误或已过期");
 
     private final int value;
     private final String reasonChPhrase;

@@ -1,5 +1,7 @@
 package com.springboot.shiro.filter;
 
+import com.springboot.shiro.common.ErrorCodeMessage;
+import com.springboot.shiro.common.MarsRuntimeException;
 import com.springboot.shiro.dao.bean.JwtToken;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +15,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * @author xutianhong
  * @Date 2020/9/23 16:27
@@ -21,13 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class JwtFilter extends AuthenticatingFilter {
 
-
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {
             return true;
         }
-        if (StringUtils.isEmpty(getAuthzHeader(request))){
+        if (StringUtils.isEmpty(getAuthzHeader(request))) {
             return true;
         }
         boolean allowed = false;
@@ -35,16 +35,17 @@ public class JwtFilter extends AuthenticatingFilter {
             allowed = executeLogin(request, response);
         } catch (Exception e) {
             log.error("Error occurs when login", e);
+            throw new MarsRuntimeException(ErrorCodeMessage.INVALID_TOKEN);
         }
         return allowed || super.isPermissive(mappedValue);
     }
 
-    //获取请求体内的token并存入对象
+    // 获取请求体内的token并存入对象
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
         String authorization = getAuthzHeader(request);
         JwtToken jwtToken = new JwtToken(authorization);
-        if(jwtToken.getJwt() == null){
+        if (jwtToken.getJwt() == null) {
             return null;
         }
         log.info("token:{}", jwtToken.getJwt());
