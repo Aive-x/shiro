@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -22,9 +23,17 @@ public class StudentEpidemicInfoController {
     private StudentEpidemicInfoService studentEpidemicInfoService;
 
     @ResponseBody
+    @RequestMapping(value = "/epidemic/page", method = RequestMethod.GET)
+    private ActionReturnUtil getPage() throws Exception {
+        return ActionReturnUtil
+            .returnSuccessWithData(studentEpidemicInfoService.getStudentEpidemicInformation(false).size() / 15 + 1);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "/epidemic", method = RequestMethod.GET)
-    private ActionReturnUtil getStudentEpidemicInformation() throws Exception {
-        return ActionReturnUtil.returnSuccessWithData(studentEpidemicInfoService.getStudentEpidemicInfomation());
+    private ActionReturnUtil getStudentEpidemicInformation(@RequestParam("page") String page) throws Exception {
+        return ActionReturnUtil
+            .returnSuccessWithData(studentEpidemicInfoService.getStudentEpidemicInformationByPage(page));
     }
 
 }

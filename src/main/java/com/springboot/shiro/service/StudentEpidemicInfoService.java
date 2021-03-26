@@ -12,7 +12,9 @@ import java.util.List;
 @Repository
 public interface StudentEpidemicInfoService {
 
-    List<StudentEpidemicInformation> getStudentEpidemicInfomation() throws Exception;
+    List<StudentEpidemicInformation> getStudentEpidemicInformation(boolean isPublished) throws Exception;
+
+    List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page) throws Exception;
 
     void setStudentEpidemicInfomation(String studentNumber, String others, String person, String place);
 

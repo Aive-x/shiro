@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.unit.DataUnit;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xutianhong
@@ -27,9 +29,30 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
     private StudentEpidemicInformationMapper studentEpidemicInformationMapper;
 
     @Override
-    public List<StudentEpidemicInformation> getStudentEpidemicInfomation() throws Exception {
+    public List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page) throws Exception {
+        List<StudentEpidemicInformation> studentEpidemicInformationList = this.getStudentEpidemicInformation(false);
+        List<StudentEpidemicInformation> result = new ArrayList<>();
+        Integer pageInt = Integer.parseInt(page);
+        if (pageInt * 15 > studentEpidemicInformationList.size()){
+            for (int i = 0; i < studentEpidemicInformationList.size(); ++i){
+                if (i + 1 >= (pageInt - 1) * 15 && i + 1 <= pageInt * 15 ){
+                    result.add(studentEpidemicInformationList.get(i));
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<StudentEpidemicInformation> getStudentEpidemicInformation(boolean isPublished) throws Exception {
         List<StudentEpidemicInformation> studentEpidemicInformationList =
             studentEpidemicInformationMapper.listStudentEpidemicInformation();
+        //isPublished == true ? 全部 : 未发布
+        if (!isPublished) {
+            studentEpidemicInformationList = studentEpidemicInformationList.stream()
+                .filter(studentEpidemicInformation -> studentEpidemicInformation.getIsPublished() == 0)
+                .collect(Collectors.toList());
+        }
         Collections.reverse(studentEpidemicInformationList);
         return studentEpidemicInformationList;
     }

@@ -23,7 +23,7 @@
     <select id="listStudentEpidemicInformation" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from stu_epidemic_info where isPublished = 0
+        from stu_epidemic_info
     </select>
 
     <insert id="setStudentEpidemicInformation">

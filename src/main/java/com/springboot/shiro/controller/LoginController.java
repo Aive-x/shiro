@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xutianhong
@@ -29,7 +31,15 @@ public class LoginController {
                                   @RequestParam("password") String password,
                                   HttpServletResponse response) throws Exception{
         String token = loginService.doLogin(username, password);
+        Map<String, String> result = new HashMap<>(2);
+        if("123456".equals(password)){
+            result.put("flag", "1");
+        }
+        else {
+            result.put("flag", "0");
+        }
+        result.put("token", token);
         response.setHeader("Authorization", token);
-        return ActionReturnUtil.returnSuccessWithData(token);
+        return ActionReturnUtil.returnSuccessWithData(result);
     }
 }

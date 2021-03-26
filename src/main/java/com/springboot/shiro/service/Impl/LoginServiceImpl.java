@@ -6,6 +6,7 @@ import com.springboot.shiro.common.ErrorCodeMessage;
 import com.springboot.shiro.common.MarsRuntimeException;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.LoginService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @Date 2020/9/23 15:23
  */
 @Service
+@Slf4j
 public class LoginServiceImpl implements LoginService {
 
 
@@ -33,7 +35,7 @@ public class LoginServiceImpl implements LoginService {
 
         User user = (User) subject.getPrincipal();
         String token = JwtUtil.generateToken(JSONObject.parseObject(JSONObject.toJSONString(user)));
-        System.out.println("登录成功， token： " + token);
+        log.info("登录成功，token:{}", token);
         return token;
     }
 

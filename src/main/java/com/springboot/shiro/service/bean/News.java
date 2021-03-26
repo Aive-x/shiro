@@ -9,8 +9,8 @@ import lombok.Data;
 @JsonInclude(value=JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class News {
-    private String id;
-    private String pubDate;
+    private Integer id;
+    private Long pubDate;
     private String pubDateStr;
     private String title;
     private String summary;

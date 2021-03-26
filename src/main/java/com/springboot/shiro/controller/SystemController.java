@@ -27,4 +27,11 @@ public class SystemController {
         return ActionReturnUtil.returnSuccessWithData(systemService.getLog());
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/examine", method = RequestMethod.GET)
+    private ActionReturnUtil getExamine() throws Exception{
+        return ActionReturnUtil.returnSuccessWithData(systemService.getExamine());
+    }
+
+
 }

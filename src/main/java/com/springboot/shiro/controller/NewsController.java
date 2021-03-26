@@ -1,6 +1,6 @@
 package com.springboot.shiro.controller;
 
-import com.springboot.shiro.service.NewService;
+import com.springboot.shiro.service.NewsService;
 import com.springboot.shiro.util.ActionReturnUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Slf4j
-@RequestMapping("/new")
-public class NewController {
+@RequestMapping("/home")
+public class NewsController {
 
     @Autowired
-    private NewService newService;
+    private NewsService newsService;
+
     @ResponseBody
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public ActionReturnUtil getNew() throws Exception {
-        return ActionReturnUtil.returnSuccessWithData(newService.getNew());
+    @RequestMapping(value = "/news", method = RequestMethod.GET)
+    public ActionReturnUtil getNews() throws Exception {
+        return ActionReturnUtil.returnSuccessWithData(newsService.getNews());
     }
+
+
 }
