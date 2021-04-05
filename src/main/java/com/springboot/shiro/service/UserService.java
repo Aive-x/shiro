@@ -24,6 +24,10 @@ public interface UserService {
 
     List<User> listUsers() throws Exception;
 
-    void addUser(User user) throws Exception;
+    void addUser(User user);
+
+    void addUser(List<String[]> userList);
+
+    void updateUser(User user);
 
 }

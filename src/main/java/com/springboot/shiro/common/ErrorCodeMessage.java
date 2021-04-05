@@ -13,7 +13,9 @@ public enum ErrorCodeMessage {
     PASSWORD_NOT_SAME(100005, "新密码与确认密码不同"),
     STUDENT_NUMBER_EMPTY(100006,"学号不能为空"),
     TAG_EMPTY(100006,"tag不能为空"),
-    INVALID_TOKEN(100007, "token错误或已过期");
+    INVALID_TOKEN(100007, "token错误或已过期"),
+    FILE_NOT_EXIST(100008,"文件不存在"),
+    FILE_NOT_CORRECT(100009,"文件格式不正确");
 
     private final int value;
     private final String reasonChPhrase;

@@ -49,7 +49,12 @@
 
     <insert id="addUser">
         insert into user (username, password, name, college, class, dormitory, role, phone)
-        values (#{username}, #{password}, #{name}, #{college}, #{class}, #{dormitory}, #{role}, #{phone})
+        values (#{username}, #{password}, #{name}, #{college}, #{classes}, #{dormitory}, #{role}, #{phone})
     </insert>
+
+    <update id="updateUser">
+        update user set password = #{password}, name = #{name}, college = #{college},
+        class = #{classes}, dormitory = #{dormitory}, role = #{role}, phone = #{phone} where username = #{username}
+    </update>
 
 </mapper>

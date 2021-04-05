@@ -19,6 +19,7 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -88,8 +89,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) throws Exception {
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
+    @Override
+    public void addUser(User user) {
         userMapper.addUser(user);
+    }
+
+    @Override
+    public void addUser(List<String[]> userList) {
+        userList.remove(0);
+        userList.forEach(userString -> {
+            User user = new User();
+            user.setUsername(userString[0]);
+            user.setCollege(userString[1]);
+            user.setClasses(userString[2]);
+            user.setName(userString[3]);
+            user.setDormitory(userString[4]);
+            user.setPassword(getHashPassword(userString[5]));
+            user.setRole(userString[6]);
+            user.setPhone(userString[7]);
+            if (ObjectUtils.isEmpty(this.getUserByUsername(user.getUsername()))){
+                this.addUser(user);
+            }
+            else {
+                this.updateUser(user);
+            }
+        });
+
     }
 
     public String getHashPassword(String password){

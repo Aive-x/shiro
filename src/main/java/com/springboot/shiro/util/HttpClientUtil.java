@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class HttpClientUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class);
-    private static int TIMEOUT = 300000;
+    private static int TIMEOUT = 30000;
     private static String UTF_8 = "UTF-8";
 
     public static Map<String, Object> httpGetClient(String url, Map<String, Object> headers, Map<String, Object> params)

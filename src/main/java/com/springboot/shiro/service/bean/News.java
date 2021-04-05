@@ -16,4 +16,5 @@ public class News {
     private String summary;
     private String infoSource;
     private String sourceUrl;
+    private String picUrl;
 }

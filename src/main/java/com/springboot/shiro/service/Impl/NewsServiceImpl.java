@@ -30,6 +30,9 @@ public class NewsServiceImpl implements NewsService {
         //非空判断
         assert newsList != null;
         //返回news
+        for (int i = 3; i < 3 + newsList.get(0).getNews().size(); ++i){
+            newsList.get(0).getNews().get(i - 3).setPicUrl(String.valueOf(i));
+        }
         return newsList.get(0).getNews();
 
     }
