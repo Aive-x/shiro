@@ -32,7 +32,7 @@ public class LoginController {
                                   HttpServletResponse response) throws Exception{
         String token = loginService.doLogin(username, password);
         Map<String, String> result = new HashMap<>(2);
-        if("123456".equals(password)){
+        if("123456".equals(password) && !"admin".equals(username)){
             result.put("flag", "1");
         }
         else {
