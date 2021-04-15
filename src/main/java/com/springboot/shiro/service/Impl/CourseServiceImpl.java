@@ -36,7 +36,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean jwcBind(JwcAccount jwcAccount) throws Exception {
         doJwcLogin(jwcAccount);
-        jwcAccount.setBind(0);
+        jwcAccount.setBind(1);
         jwcAccountMapper.bindJwcAccount(jwcAccount);
         return true;
     }
@@ -77,9 +77,6 @@ public class CourseServiceImpl implements CourseService {
         String url = "/DefaultCourseList" + "?userNumber=" + jwcAccount.getJwcUsername() + "&userPassword="
             + jwcAccount.getJwcPassword();
         Map<String, Object> result = HttpClientUtil.httpGetClient(ZF_URL + url, null, null);
-
-        jwcAccount.setBind(1);
-        jwcAccountMapper.bindJwcAccount(jwcAccount);
         return JsonUtil.jsonToList(result.get("body").toString(), Course.class);
     }
 

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -71,44 +72,49 @@ public class ExamineServiceImpl implements ExamineService {
         schoolEpidemic.setName(studentEpidemicInformation.getName());
         // 获取教务处账号用于登陆教务管理系统
         JwcAccount jwcAccount = courseService.getJwcAccount(studentEpidemicInformation.getStudentNumber());
-        // 获取课程列表
-        List<Course> courseList = courseService.listCourse(jwcAccount);
-        // 整理课程列表信息
-        Map<String, List<Course>> courseListMap = courseList.stream().collect(Collectors.groupingBy(Course::getDay));
-        List<String> tripList = new ArrayList<>();
+        if (ObjectUtils.isEmpty(jwcAccount)){
+            schoolEpidemic.setTrip("尚未绑定教务处！");
+        }else {
+            // 获取课程列表
+            List<Course> courseList = courseService.listCourse(jwcAccount);
+            // 整理课程列表信息
+            Map<String, List<Course>> courseListMap = courseList.stream().collect(Collectors.groupingBy(Course::getDay));
+            List<String> tripList = new ArrayList<>();
 
-        courseListMap.forEach((day, courses) -> {
-            String dayTrip = "";
-            switch (day) {
-                case "周一":
-                    dayTrip = "1" + day + ":\n";
-                    break;
-                case "周二":
-                    dayTrip = "2" + day + ":\n";
-                    break;
-                case "周三":
-                    dayTrip = "3" + day + ":\n";
-                    break;
-                case "周四":
-                    dayTrip = "4" + day + ":\n";
-                    break;
-                case "周五":
-                    dayTrip = "5" + day + ":\n";
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + day);
+            courseListMap.forEach((day, courses) -> {
+                String dayTrip = "";
+                switch (day) {
+                    case "周一":
+                        dayTrip = "1" + day + ":\n";
+                        break;
+                    case "周二":
+                        dayTrip = "2" + day + ":\n";
+                        break;
+                    case "周三":
+                        dayTrip = "3" + day + ":\n";
+                        break;
+                    case "周四":
+                        dayTrip = "4" + day + ":\n";
+                        break;
+                    case "周五":
+                        dayTrip = "5" + day + ":\n";
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + day);
+                }
+                // tring dayTrip = day + ":\n";
+                for (Course course : courses) {
+                    dayTrip = dayTrip + course.getNumber() + "   "
+                            + course.getClassRoom().substring(0, course.getClassRoom().indexOf("楼") + 4) + "\n";
+                }
+                tripList.add(dayTrip);
+            });
+            String trip = "";
+            Collections.sort(tripList);
+            for (String dayTrip : tripList) {
+                trip = trip + dayTrip;
             }
-            // tring dayTrip = day + ":\n";
-            for (Course course : courses) {
-                dayTrip = dayTrip + course.getNumber() + "   "
-                    + course.getClassRoom().substring(0, course.getClassRoom().indexOf("楼") + 4) + "\n";
-            }
-            tripList.add(dayTrip);
-        });
-        String trip = "";
-        Collections.sort(tripList);
-        for (String dayTrip : tripList) {
-            trip = trip + dayTrip;
+            schoolEpidemic.setTrip(trip);
         }
 
         List<Trip> locationList = tripService.listTrip(studentEpidemicInformation.getStudentNumber());
@@ -116,7 +122,6 @@ public class ExamineServiceImpl implements ExamineService {
             Trip location = locationList.get(locationList.size() - 1);
             schoolEpidemic.setPlace(location.getProvince() + "-" + location.getCity() + "-" + location.getPosition());
         }
-        schoolEpidemic.setTrip(trip);
         schoolEpidemic.setTag(tag);
         schoolEpidemic.setStudentNumber(studentEpidemicInformation.getStudentNumber());
         User user = userService.getUserByUsername(operator);

@@ -25,9 +25,7 @@
         select
         <include refid="Base_Column_List"/>
         from trip
-        <if test="studentNumber != null">
-            where student_number = #{studentNumber}
-        </if>
+        where student_number = #{studentNumber}
     </select>
 
     <select id="getTripByCity" resultMap="BaseResultMap">
