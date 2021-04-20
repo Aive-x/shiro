@@ -4,6 +4,7 @@ import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
 import com.springboot.shiro.dao.bean.StudentEpidemicInformation;
 import com.springboot.shiro.dao.bean.User;
 import com.springboot.shiro.service.StudentEpidemicInfoService;
+import com.springboot.shiro.service.TeacherClassesService;
 import com.springboot.shiro.service.UserService;
 import com.springboot.shiro.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,27 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
     @Autowired
     private StudentEpidemicInformationMapper studentEpidemicInformationMapper;
 
+    @Autowired
+    private TeacherClassesService teacherClassesService;
+
     @Override
-    public List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page) throws Exception {
+    public List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page, String username)
+        throws Exception {
         List<StudentEpidemicInformation> studentEpidemicInformationList = this.getStudentEpidemicInformation(false);
+
+        if (!"admin".equals(username)){
+            //过滤班级
+            List<String> classesList = teacherClassesService.listTeacherClasses(username);
+            studentEpidemicInformationList = studentEpidemicInformationList.stream()
+                    .filter(studentEpidemicInformation -> classesList.stream()
+                            .anyMatch(classes -> studentEpidemicInformation.getClasses().equals(classes)))
+                    .collect(Collectors.toList());
+        }
         List<StudentEpidemicInformation> result = new ArrayList<>();
-        Integer pageInt = Integer.parseInt(page);
-        if (pageInt * 15 > studentEpidemicInformationList.size()){
-            for (int i = 0; i < studentEpidemicInformationList.size(); ++i){
-                if (i + 1 >= (pageInt - 1) * 15 && i + 1 <= pageInt * 15 ){
+        int pageInt = Integer.parseInt(page);
+        if (pageInt * 15 > studentEpidemicInformationList.size()) {
+            for (int i = 0; i < studentEpidemicInformationList.size(); ++i) {
+                if (i + 1 >= (pageInt - 1) * 15 && i + 1 <= pageInt * 15) {
                     result.add(studentEpidemicInformationList.get(i));
                 }
             }
@@ -47,7 +61,7 @@ public class StudentEpidemicInfoServiceImpl implements StudentEpidemicInfoServic
     public List<StudentEpidemicInformation> getStudentEpidemicInformation(boolean isPublished) throws Exception {
         List<StudentEpidemicInformation> studentEpidemicInformationList =
             studentEpidemicInformationMapper.listStudentEpidemicInformation();
-        //isPublished == true ? 全部 : 未发布
+        // isPublished == true ? 全部 : 未发布
         if (!isPublished) {
             studentEpidemicInformationList = studentEpidemicInformationList.stream()
                 .filter(studentEpidemicInformation -> studentEpidemicInformation.getIsPublished() == 0)

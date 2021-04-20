@@ -33,10 +33,10 @@ public class TabsController {
                 tabsNumber = "124";
                 break;
             case "teacher":
-                tabsNumber = "1234";
+                tabsNumber = "1235";
                 break;
             case "admin":
-                tabsNumber = "12345";
+                tabsNumber = "1236";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + role);

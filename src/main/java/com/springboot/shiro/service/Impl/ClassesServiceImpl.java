@@ -6,7 +6,9 @@ import com.springboot.shiro.service.ClassesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xutianhong
@@ -21,6 +23,16 @@ public class ClassesServiceImpl implements ClassesService {
     @Override
     public List<Classes> listClasses() {
         return classesMapper.listClasses();
+    }
+
+    @Override
+    public List<Classes> listClasses(String ids) {
+        List<Classes> classesList = this.listClasses();
+        String[] idList = ids.split(",");
+        classesList = classesList.stream()
+            .filter(classes -> Arrays.stream(idList).anyMatch(id -> id.equals(String.valueOf(classes.getId()))))
+            .collect(Collectors.toList());
+        return classesList;
     }
 
     @Override

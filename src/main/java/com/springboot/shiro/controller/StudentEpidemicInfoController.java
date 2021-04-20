@@ -2,6 +2,7 @@ package com.springboot.shiro.controller;
 
 import com.springboot.shiro.service.StudentEpidemicInfoService;
 import com.springboot.shiro.util.ActionReturnUtil;
+import com.springboot.shiro.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.ServletRequest;
 
 /**
  * @author xutianhong
@@ -31,9 +34,10 @@ public class StudentEpidemicInfoController {
 
     @ResponseBody
     @RequestMapping(value = "/epidemic", method = RequestMethod.GET)
-    private ActionReturnUtil getStudentEpidemicInformation(@RequestParam("page") String page) throws Exception {
-        return ActionReturnUtil
-            .returnSuccessWithData(studentEpidemicInfoService.getStudentEpidemicInformationByPage(page));
+    private ActionReturnUtil getStudentEpidemicInformation(@RequestParam("page") String page, ServletRequest request)
+        throws Exception {
+        return ActionReturnUtil.returnSuccessWithData(
+            studentEpidemicInfoService.getStudentEpidemicInformationByPage(page, JwtUtil.getUsername(request)));
     }
 
 }

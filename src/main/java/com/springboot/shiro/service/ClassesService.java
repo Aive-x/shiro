@@ -11,5 +11,7 @@ import java.util.List;
 public interface ClassesService {
     List<Classes> listClasses();
 
+    List<Classes> listClasses(String ids);
+
     List<Classes> getClasses(String college);
 }

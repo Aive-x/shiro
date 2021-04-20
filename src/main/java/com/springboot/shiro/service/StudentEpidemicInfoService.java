@@ -14,7 +14,7 @@ public interface StudentEpidemicInfoService {
 
     List<StudentEpidemicInformation> getStudentEpidemicInformation(boolean isPublished) throws Exception;
 
-    List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page) throws Exception;
+    List<StudentEpidemicInformation> getStudentEpidemicInformationByPage(String page, String username) throws Exception;
 
     void setStudentEpidemicInfomation(String studentNumber, String others, String person, String place);
 

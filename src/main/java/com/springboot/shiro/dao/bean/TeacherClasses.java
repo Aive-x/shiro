@@ -4,11 +4,11 @@ import lombok.Data;
 
 /**
  * @author xutianhong
- * @Date 2021/2/25 11:57 上午
+ * @Date 2021/4/20 4:24 下午
  */
 @Data
-public class Classes {
+public class TeacherClasses {
     private Integer id;
-    private String college;
+    private Integer username;
     private String classes;
 }
