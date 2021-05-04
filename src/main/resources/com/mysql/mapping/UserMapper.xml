@@ -34,7 +34,7 @@
     <select id="getSameDormitoryStudent" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user where dormitory = #{dormitory} and username != #{username}
+        from user where dormitory = #{dormitory}
     </select>
 
     <update id="updatePassword">

@@ -30,7 +30,7 @@ public class Examine {
     public void touchPeople(String studentNumber) {
         User user = userService.getUserByUsername(studentNumber);
 
-        List<User> sameDormitoryStudentList = userService.getSameDormitoryStudent(user.getDormitory(), studentNumber);
+        List<User> sameDormitoryStudentList = userService.getSameDormitoryStudent(studentNumber, user.getDormitory());
         sameDormitoryStudentList.forEach(sameDormitoryStudent -> {
             studentEpidemicInfoService.setStudentEpidemicInfomation(sameDormitoryStudent.getUsername(), null,
                 user.getName(), "寝室");

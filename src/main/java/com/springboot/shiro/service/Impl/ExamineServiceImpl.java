@@ -6,6 +6,7 @@ import com.springboot.shiro.dao.JwcAccountMapper;
 import com.springboot.shiro.dao.SchoolEpidemicMapper;
 import com.springboot.shiro.dao.StudentEpidemicInformationMapper;
 import com.springboot.shiro.dao.bean.*;
+import com.springboot.shiro.epidemic.Examine;
 import com.springboot.shiro.service.*;
 import com.springboot.shiro.service.bean.Course;
 import com.springboot.shiro.util.DateUtil;
@@ -35,6 +36,8 @@ public class ExamineServiceImpl implements ExamineService {
     private UserService userService;
     @Autowired
     private TripService tripService;
+    @Autowired
+    private Examine examine;
 
     @Override
     public void publishStudentEpidemic(String ids, String tags, String operator) throws Exception {
@@ -127,5 +130,6 @@ public class ExamineServiceImpl implements ExamineService {
         User user = userService.getUserByUsername(operator);
         schoolEpidemic.setOperator(user.getName());
         schoolEpidemicMapper.addSchoolEpidemic(schoolEpidemic);
+
     }
 }

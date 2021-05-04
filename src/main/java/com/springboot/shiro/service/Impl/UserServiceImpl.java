@@ -20,11 +20,14 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xutianhong
@@ -48,7 +51,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getSameDormitoryStudent(String studentNumber, String dormitory) {
-        return userMapper.getSameDormitoryStudent(dormitory, studentNumber);
+        List<User> userList = userMapper.listUsers();
+        if (CollectionUtils.isEmpty(userList)) {
+            return new ArrayList<>();
+        }
+        userList = userList.stream().filter(user -> {
+            if (user.getDormitory() != null && !user.getUsername().equals(studentNumber)
+                && user.getDormitory().equals(dormitory)) {
+                return true;
+            }
+            return false;
+        }).collect(Collectors.toList());
+        return userList;
     }
 
     @Override

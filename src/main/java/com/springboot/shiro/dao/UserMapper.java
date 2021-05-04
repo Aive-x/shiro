@@ -17,7 +17,7 @@ public interface UserMapper {
     User getUserByUsername(String username);
 
     //获取同一寝室的人，不包含自己
-    List<User> getSameDormitoryStudent(String dormitory, String username);
+    List<User> getSameDormitoryStudent(String dormitory);
 
     void updatePassword(String username, String password);
 
